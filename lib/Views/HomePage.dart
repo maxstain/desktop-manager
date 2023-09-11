@@ -63,8 +63,6 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    
-
     return Scaffold(
       backgroundColor: isFree == false ? Colors.white : Colors.green,
       bottomNavigationBar: BottomNavigationBar(
@@ -105,7 +103,6 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-
   @override
   void initState() {
     super.initState();
