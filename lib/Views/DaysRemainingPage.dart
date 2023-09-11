@@ -50,7 +50,6 @@ class _DaysRemainingPageState extends State<DaysRemainingPage> {
                 fontSize: 16,
                 fontWeight: FontWeight.bold,
                 color: Colors.white,
-                overflow: TextOverflow.ellipsis,
               ),
             ),
             // Days, months, and years until the 19th of December 2028
@@ -64,7 +63,6 @@ class _DaysRemainingPageState extends State<DaysRemainingPage> {
                 fontSize: 16,
                 fontWeight: FontWeight.bold,
                 color: Colors.white,
-                overflow: TextOverflow.ellipsis,
               ),
             ),
           ],
