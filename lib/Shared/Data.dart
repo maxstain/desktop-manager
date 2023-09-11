@@ -11,6 +11,21 @@ class SharedData {
   int seconds = 0;
   double offset = 30;
 
+  List<BottomNavigationBarItem> items = const [
+    BottomNavigationBarItem(
+      icon: Icon(Icons.home),
+      label: 'Home',
+    ),
+    BottomNavigationBarItem(
+      icon: Icon(Icons.lock_clock_rounded),
+      label: 'Clock Out Time',
+    ),
+    BottomNavigationBarItem(
+      icon: Icon(Icons.calendar_month_rounded),
+      label: 'Total Days Remaining',
+    ),
+  ];
+
   void checker() {
     if (DateTime.now().weekday == DateTime.saturday ||
         DateTime.now().weekday == DateTime.sunday) {

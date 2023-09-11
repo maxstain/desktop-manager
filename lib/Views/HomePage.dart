@@ -63,25 +63,12 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    const List<BottomNavigationBarItem> items = [
-      BottomNavigationBarItem(
-        icon: Icon(Icons.home),
-        label: 'Home',
-      ),
-      BottomNavigationBarItem(
-        icon: Icon(Icons.lock_clock_rounded),
-        label: 'Clock Out Time',
-      ),
-      BottomNavigationBarItem(
-        icon: Icon(Icons.calendar_month_rounded),
-        label: 'Total Days Remaining',
-      ),
-    ];
+    
 
     return Scaffold(
       backgroundColor: isFree == false ? Colors.white : Colors.green,
       bottomNavigationBar: BottomNavigationBar(
-        items: items,
+        items: SharedData().items,
         currentIndex: index,
         onTap: (int i) {
           setState(() {
