@@ -20,8 +20,7 @@ class SharedData {
     } else if (DateTime.now().hour < 9) {
       isFree = true;
     } else if (DateTime.now().month == 7 || DateTime.now().month == 8) {
-      hours = hours =
-          const TimeOfDay(hour: 15, minute: 00).hour - TimeOfDay.now().hour;
+      hours = const TimeOfDay(hour: 15, minute: 00).hour - TimeOfDay.now().hour;
       minutes =
           const TimeOfDay(hour: 16, minute: 60).minute - TimeOfDay.now().minute;
       if (DateTime.now().hour >= 16) {
@@ -30,10 +29,14 @@ class SharedData {
         isFree = false;
       }
     } else {
-      hours = hours =
-          const TimeOfDay(hour: 17, minute: 00).hour - TimeOfDay.now().hour;
+      hours = const TimeOfDay(hour: 17, minute: 00).hour - TimeOfDay.now().hour;
       minutes =
           const TimeOfDay(hour: 18, minute: 60).minute - TimeOfDay.now().minute;
+    }
+    if (DateTime(2028, 12, 19) == DateTime.now()) {
+      isLastDay = true;
+    } else {
+      isFree = false;
     }
   }
 

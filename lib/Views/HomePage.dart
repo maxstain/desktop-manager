@@ -173,7 +173,7 @@ class _HomeState extends State<Home> {
         Container(
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(10),
-            color: widget.isFree == false ? Colors.white : Colors.green,
+            color: SharedData().isFree == false ? Colors.white : Colors.green,
             border: Border.all(
               color: Theme.of(context).colorScheme.secondary,
               width: 2,
@@ -185,41 +185,7 @@ class _HomeState extends State<Home> {
           ),
           width: MediaQuery.of(context).size.width - offset,
           height: 100,
-          child: DateTime.now().month == 7 || DateTime.now().month == 8
-              ? Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    const Text(
-                      // Time until clocking out (6:00 PM)
-                      'Time until clocking out:',
-                      style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                    ),
-                    hours > 0
-                        ? Text(
-                            '$hours hours '
-                            '$minutes minutes',
-                            style: const TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.bold,
-                              overflow: TextOverflow.ellipsis,
-                            ),
-                          )
-                        : Text(
-                            '$minutes minutes',
-                            style: const TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.bold,
-                              overflow: TextOverflow.ellipsis,
-                            ),
-                          ),
-                  ],
-                )
-              : Column(
+          child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [

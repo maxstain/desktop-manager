@@ -53,7 +53,7 @@ void checker() {
 
   @override
   Widget build(BuildContext context) {
-    double offset = 30;
+    double offset = SharedData().offset;
     return ListView(
       children: [
         Container(

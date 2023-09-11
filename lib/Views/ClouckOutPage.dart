@@ -56,9 +56,9 @@ class _ClockOutPageState extends State<ClockOutPage> {
   Widget build(BuildContext context) {
     double offset = 30;
     late int hours =
-        const TimeOfDay(hour: 15, minute: 00).hour - TimeOfDay.now().hour;
+        SharedData().hours;
     late int minutes =
-        const TimeOfDay(hour: 16, minute: 60).minute - TimeOfDay.now().minute;
+        SharedData().minutes;
     return ListView(
       children: [
         Container(
@@ -90,73 +90,39 @@ class _ClockOutPageState extends State<ClockOutPage> {
           ),
           width: MediaQuery.of(context).size.width - offset,
           height: 100,
-          child: DateTime.now().month == 7 || DateTime.now().month == 8
-              ? Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    const Text(
-                      // Time until clocking out (6:00 PM)
-                      'Time until clocking out:',
-                      style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                    ),
-                    hours > 0
-                        ? Text(
-                            '$hours hours '
-                            '$minutes minutes',
-                            style: const TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.bold,
-                              overflow: TextOverflow.ellipsis,
-                            ),
-                          )
-                        : Text(
-                            '$minutes minutes',
-                            style: const TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.bold,
-                              overflow: TextOverflow.ellipsis,
-                            ),
-                          ),
-                  ],
-                )
-              : Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    const Text(
-                      // Time until clocking out (6:00 PM)
-                      'Time until clocking out:',
-                      style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                    ),
-                    hours > 0
-                        ? Text(
-                            '$hours hours '
-                            '$minutes minutes',
-                            style: const TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.bold,
-                              overflow: TextOverflow.ellipsis,
-                            ),
-                          )
-                        : Text(
-                            '$minutes minutes',
-                            style: const TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.bold,
-                              overflow: TextOverflow.ellipsis,
-                            ),
-                          ),
-                  ],
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              const Text(
+                // Time until clocking out (6:00 PM)
+                'Time until clocking out:',
+                style: TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold,
+                  overflow: TextOverflow.ellipsis,
                 ),
+              ),
+              hours > 0
+                  ? Text(
+                      '$hours hours '
+                      '$minutes minutes',
+                      style: const TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                    )
+                  : Text(
+                      '$minutes minutes',
+                      style: const TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                    ),
+            ],
+          ),
         ),
       ],
     );
