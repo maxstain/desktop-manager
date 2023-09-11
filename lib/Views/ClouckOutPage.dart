@@ -9,9 +9,17 @@ class ClockOutPage extends StatefulWidget {
 }
 
 class _ClockOutPageState extends State<ClockOutPage> {
+
+  void timer() {
+    Future.delayed(const Duration(seconds: 1), () {
+      timer();
+    });
+  }
+
   @override
   void initState() {
     super.initState();
+    timer();
   }
 
   @override

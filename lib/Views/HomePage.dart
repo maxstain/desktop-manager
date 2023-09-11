@@ -65,45 +65,32 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     //
-    List<BottomNavigationBarItem> items = [
+    const List<BottomNavigationBarItem> items = [
       BottomNavigationBarItem(
-        icon: IconButton(
-          icon: const Icon(Icons.home),
-          onPressed: () => Navigator.of(context).push(
-            MaterialPageRoute(
-              builder: (context) => const HomePage(),
-            ),
-          ),
-        ),
+        icon: Icon(Icons.home),
         label: 'Home',
       ),
       BottomNavigationBarItem(
-        icon: IconButton(
-          icon: const Icon(Icons.lock_clock_rounded),
-          onPressed: () => Navigator.of(context).push(
-            MaterialPageRoute(
-              builder: (context) => ClockOutPage(isFree: isFree),
-            ),
-          ),
-        ),
+        icon: Icon(Icons.lock_clock_rounded),
         label: 'Clock Out Time',
       ),
       BottomNavigationBarItem(
-        icon: IconButton(
-          icon: const Icon(Icons.calendar_month_rounded),
-          onPressed: () => Navigator.of(context).push(
-            MaterialPageRoute(
-              builder: (context) => const DaysRemainingPage(),
-            ),
-          ),
-        ),
+        icon: Icon(Icons.calendar_month_rounded),
         label: 'Total Days Remaining',
       ),
     ];
 
     return Scaffold(
       backgroundColor: isFree == false ? Colors.white : Colors.green,
-      bottomNavigationBar: BottomNavigationBar(items: items),
+      bottomNavigationBar: BottomNavigationBar(
+        items: items,
+        currentIndex: index,
+        onTap: (int i) {
+          setState(() {
+            index = i;
+          });
+        },
+      ),
       body: index == 0
           ? Home(
               isFree: isFree,
@@ -135,18 +122,21 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      crossAxisAlignment: CrossAxisAlignment.center,
+    return ListView(
       children: [
-        widget.isLastDay
-            ? const Text(
-                'TODAY IS YOUR LAST DAY!!!!',
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  fontSize: 30,
-                  fontWeight: FontWeight.bold,
-                  overflow: TextOverflow.ellipsis,
+        !widget.isLastDay
+            ? Container(
+                margin: const EdgeInsets.symmetric(
+                  horizontal: 20,
+                  vertical: 10,
+                ),
+                child: Text(
+                  'TODAY IS YOUR LAST DAY!!!!',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: 30,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
               )
             : Container(),
@@ -174,7 +164,6 @@ class _HomeState extends State<Home> {
                 style: TextStyle(
                   fontSize: 20,
                   fontWeight: FontWeight.bold,
-                  overflow: TextOverflow.ellipsis,
                 ),
               ),
               Text(
@@ -183,7 +172,6 @@ class _HomeState extends State<Home> {
                 style: const TextStyle(
                   fontSize: 20,
                   fontWeight: FontWeight.bold,
-                  overflow: TextOverflow.ellipsis,
                 ),
               ),
             ],
@@ -295,7 +283,6 @@ class _HomeState extends State<Home> {
                   fontSize: 16,
                   fontWeight: FontWeight.bold,
                   color: Colors.white,
-                  overflow: TextOverflow.ellipsis,
                 ),
               ),
               // Days, months, and years until the 19th of December 2028
@@ -309,7 +296,6 @@ class _HomeState extends State<Home> {
                   fontSize: 16,
                   fontWeight: FontWeight.bold,
                   color: Colors.white,
-                  overflow: TextOverflow.ellipsis,
                 ),
               ),
             ],
