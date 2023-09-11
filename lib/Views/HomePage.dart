@@ -124,13 +124,13 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
     return ListView(
       children: [
-        !widget.isLastDay
+        widget.isLastDay
             ? Container(
                 margin: const EdgeInsets.symmetric(
                   horizontal: 20,
                   vertical: 10,
                 ),
-                child: Text(
+                child: const Text(
                   'TODAY IS YOUR LAST DAY!!!!',
                   textAlign: TextAlign.center,
                   style: TextStyle(
