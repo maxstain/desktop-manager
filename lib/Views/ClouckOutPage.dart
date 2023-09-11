@@ -33,7 +33,7 @@ class _ClockOutPageState extends State<ClockOutPage> {
       }
     });
   }
-
+  
   void _timer() {
     Future.delayed(const Duration(seconds: 1), () {
       checker();
