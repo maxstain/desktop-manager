@@ -1,17 +1,49 @@
+import 'package:desktop_manager/Shared/Data.dart';
 import 'package:flutter/material.dart';
 
 class ClockOutPage extends StatefulWidget {
-  final bool isFree;
-  const ClockOutPage({Key? key, required this.isFree}) : super(key: key);
+  const ClockOutPage({Key? key}) : super(key: key);
 
   @override
   State<ClockOutPage> createState() => _ClockOutPageState();
 }
 
 class _ClockOutPageState extends State<ClockOutPage> {
+  void checker() {
+    setState(() {
+      if (DateTime.now().weekday == DateTime.saturday ||
+          DateTime.now().weekday == DateTime.sunday) {
+        SharedData().isFree = true;
+        SharedData().isWeekend = true;
+      } else if (DateTime.now().hour >= 18) {
+        SharedData().isFree = true;
+      } else if (DateTime.now().hour < 9) {
+        SharedData().isFree = true;
+      } else if (DateTime.now().month == 7 || DateTime.now().month == 8) {
+        if (DateTime.now().hour >= 16) {
+          SharedData().isFree = true;
+        } else {
+          SharedData().isFree = false;
+        }
+      }
+      if (DateTime(2028, 12, 19) == DateTime.now()) {
+        SharedData().isLastDay = true;
+      } else {
+        SharedData().isFree = false;
+      }
+    });
+  }
+
+  void _timer() {
+    Future.delayed(const Duration(seconds: 1), () {
+      checker();
+      _timer();
+    });
+  }
   @override
   void initState() {
     super.initState();
+    _timer();
   }
 
   @override
@@ -40,7 +72,7 @@ class _ClockOutPageState extends State<ClockOutPage> {
         Container(
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(10),
-            color: widget.isFree == false ? Colors.white : Colors.green,
+            color: SharedData().isFree == false ? Colors.white : Colors.green,
             border: Border.all(
               color: Theme.of(context).colorScheme.secondary,
               width: 2,

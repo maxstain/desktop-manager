@@ -96,7 +96,7 @@ class _HomePageState extends State<HomePage> {
               isLastDay: isLastDay,
             )
           : index == 1
-              ? ClockOutPage(isFree: isFree)
+              ? const ClockOutPage()
               : const DaysRemainingPage(),
     );
   }

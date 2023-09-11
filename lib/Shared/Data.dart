@@ -10,6 +10,40 @@ class SharedData {
       const TimeOfDay(hour: 16, minute: 60).minute - TimeOfDay.now().minute;
   int seconds = 0;
   double offset = 30;
+
+  void checker() {
+    if (DateTime.now().weekday == DateTime.saturday ||
+        DateTime.now().weekday == DateTime.sunday) {
+      isFree = true;
+      isWeekend = true;
+    } else if (DateTime.now().hour >= 18) {
+      isFree = true;
+    } else if (DateTime.now().hour < 9) {
+      isFree = true;
+    } else if (DateTime.now().month == 7 || DateTime.now().month == 8) {
+      if (DateTime.now().hour >= 16) {
+        isFree = true;
+      } else {
+        isFree = false;
+      }
+    }
+    if (DateTime(2028, 12, 19) == DateTime.now()) {
+      isLastDay = true;
+    } else {
+      isFree = false;
+    }
+  }
+
+  // Shared functions
+  void timer() {
+    Future.delayed(
+      const Duration(seconds: 1),
+      () {
+        timer();
+        checker();
+      },
+    );
+  }
 }
 
 // Path: lib/Views/DaysRemainingPage.dart

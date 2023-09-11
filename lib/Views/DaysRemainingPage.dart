@@ -1,3 +1,4 @@
+import 'package:desktop_manager/Shared/Data.dart';
 import 'package:flutter/material.dart';
 
 class DaysRemainingPage extends StatefulWidget {
@@ -8,9 +9,41 @@ class DaysRemainingPage extends StatefulWidget {
 }
 
 class _DaysRemainingPageState extends State<DaysRemainingPage> {
+void checker() {
+    setState(() {
+      if (DateTime.now().weekday == DateTime.saturday ||
+          DateTime.now().weekday == DateTime.sunday) {
+        SharedData().isFree = true;
+        SharedData().isWeekend = true;
+      } else if (DateTime.now().hour >= 18) {
+        SharedData().isFree = true;
+      } else if (DateTime.now().hour < 9) {
+        SharedData().isFree = true;
+      } else if (DateTime.now().month == 7 || DateTime.now().month == 8) {
+        if (DateTime.now().hour >= 16) {
+          SharedData().isFree = true;
+        } else {
+          SharedData().isFree = false;
+        }
+      }
+      if (DateTime(2028, 12, 19) == DateTime.now()) {
+        SharedData().isLastDay = true;
+      } else {
+        SharedData().isFree = false;
+      }
+    });
+  }
+
+  void _timer() {
+    Future.delayed(const Duration(seconds: 1), () {
+      checker();
+      _timer();
+    });
+  }
   @override
   void initState() {
     super.initState();
+    _timer();
   }
 
   @override
