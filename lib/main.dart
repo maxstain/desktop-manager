@@ -2,7 +2,6 @@ import 'package:desktop_manager/Shared/Data.dart';
 import 'package:desktop_manager/Views/HomePage.dart';
 import 'package:flutter/material.dart';
 
-
 void main() {
   runApp(const MyApp());
 }
