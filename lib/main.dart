@@ -1,8 +1,15 @@
 import 'package:desktop_manager/Views/HomePage.dart';
 import 'package:flutter/material.dart';
 
+void timer() {
+  Future.delayed(const Duration(seconds: 1), () {
+    timer();
+  });
+}
+
 void main() {
   runApp(const MyApp());
+  timer();
 }
 
 class MyApp extends StatelessWidget {
@@ -18,7 +25,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const HomePage(title: 'Flutter Demo Home Page'),
+      home: const HomePage(),
     );
   }
 }
