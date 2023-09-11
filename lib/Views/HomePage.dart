@@ -4,12 +4,11 @@ import 'package:desktop_manager/Views/ClouckOutPage.dart';
 import 'package:desktop_manager/Views/DaysRemainingPage.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
+import 'package:desktop_manager/Shared/Data.dart';
 
-double offset = 30;
-late int hours =
-    const TimeOfDay(hour: 15, minute: 00).hour - TimeOfDay.now().hour;
-late int minutes =
-    const TimeOfDay(hour: 16, minute: 60).minute - TimeOfDay.now().minute;
+double offset = SharedData().offset;
+late int hours = SharedData().hours;
+late int minutes = SharedData().minutes;
 int index = 0;
 
 class HomePage extends StatefulWidget {
@@ -20,9 +19,9 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  late bool isFree = false;
-  late bool isWeekend = false;
-  late bool isLastDay = false;
+  late bool isFree = SharedData().isFree;
+  late bool isWeekend = SharedData().isWeekend;
+  late bool isLastDay = SharedData().isLastDay;
 
   void checker() {
     setState(() {
@@ -64,7 +63,6 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    //
     const List<BottomNavigationBarItem> items = [
       BottomNavigationBarItem(
         icon: Icon(Icons.home),
