@@ -1,3 +1,4 @@
+import 'package:desktop_manager/Views/ClouckOutPage.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 
@@ -79,7 +80,7 @@ class _HomePageState extends State<HomePage> {
             icon: const Icon(Icons.lock_clock_rounded),
             onPressed: () => Navigator.of(context).push(
               MaterialPageRoute(
-                builder: (context) => HomePage(title: widget.title),
+                builder: (context) => const ClockOutPage(),
               ),
             ),
           ),

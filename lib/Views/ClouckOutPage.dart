@@ -15,6 +15,13 @@ class _ClockOutPageState extends State<ClockOutPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold();
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Clock Out'),
+      ),
+      body: const Center(
+        child: Text('Clock Out'),
+      ),
+    );
   }
 }
