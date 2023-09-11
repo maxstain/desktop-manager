@@ -8,12 +8,13 @@ class DaysRemainingPage extends StatefulWidget {
 }
 
 class _DaysRemainingPageState extends State<DaysRemainingPage> {
+  
   void timer() {
     Future.delayed(const Duration(seconds: 1), () {
       timer();
     });
   }
-  
+
   @override
   void initState() {
     super.initState();

@@ -1,15 +1,9 @@
 import 'package:desktop_manager/Views/HomePage.dart';
 import 'package:flutter/material.dart';
 
-void timer() {
-  Future.delayed(const Duration(seconds: 1), () {
-    timer();
-  });
-}
 
 void main() {
   runApp(const MyApp());
-  timer();
 }
 
 class MyApp extends StatelessWidget {
