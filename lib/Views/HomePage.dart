@@ -62,6 +62,41 @@ class _HomePageState extends State<HomePage> {
         const TimeOfDay(hour: 16, minute: 60).minute - TimeOfDay.now().minute;
     return Scaffold(
       backgroundColor: isFree == false ? Colors.white : Colors.green,
+      bottomNavigationBar: BottomNavigationBar(items: [
+        BottomNavigationBarItem(
+          icon: IconButton(
+            icon: const Icon(Icons.home),
+            onPressed: () => Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (context) => HomePage(title: widget.title),
+              ),
+            ),
+          ),
+          label: 'Home',
+        ),
+        BottomNavigationBarItem(
+          icon: IconButton(
+            icon: const Icon(Icons.lock_clock_rounded),
+            onPressed: () => Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (context) => HomePage(title: widget.title),
+              ),
+            ),
+          ),
+          label: 'Clock Out Time',
+        ),
+        BottomNavigationBarItem(
+          icon: IconButton(
+            icon: const Icon(Icons.calendar_month_rounded),
+            onPressed: () => Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (context) => HomePage(title: widget.title),
+              ),
+            ),
+          ),
+          label: 'Total Days Remaining',
+        ),
+      ]),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
