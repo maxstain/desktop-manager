@@ -47,6 +47,11 @@ class _ClockOutPageState extends State<ClockOutPage> {
   }
 
   @override
+  void dispose() {
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     double offset = 30;
     late int hours =

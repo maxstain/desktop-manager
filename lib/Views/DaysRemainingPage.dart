@@ -47,6 +47,11 @@ void checker() {
   }
 
   @override
+  void dispose() {
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     double offset = 30;
     return ListView(
