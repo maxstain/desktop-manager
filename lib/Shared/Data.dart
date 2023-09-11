@@ -5,11 +5,37 @@ class SharedData {
   bool isWeekend = false;
   bool isFree = false;
   bool isLastDay = false;
-  int hours = const TimeOfDay(hour: 15, minute: 00).hour - TimeOfDay.now().hour;
-  int minutes =
-      const TimeOfDay(hour: 16, minute: 60).minute - TimeOfDay.now().minute;
+  int hours = 0;
+  int minutes = 0;
   int seconds = 0;
   double offset = 30;
+
+  SharedData() {
+    if (DateTime.now().weekday == DateTime.saturday ||
+        DateTime.now().weekday == DateTime.sunday) {
+      isFree = true;
+      isWeekend = true;
+    } else if (DateTime.now().hour >= 18) {
+      isFree = true;
+    } else if (DateTime.now().hour < 9) {
+      isFree = true;
+    } else if (DateTime.now().month == 7 || DateTime.now().month == 8) {
+      hours = hours =
+          const TimeOfDay(hour: 15, minute: 00).hour - TimeOfDay.now().hour;
+      minutes =
+          const TimeOfDay(hour: 16, minute: 60).minute - TimeOfDay.now().minute;
+      if (DateTime.now().hour >= 16) {
+        isFree = true;
+      } else {
+        isFree = false;
+      }
+    } else {
+      hours = hours =
+          const TimeOfDay(hour: 17, minute: 00).hour - TimeOfDay.now().hour;
+      minutes =
+          const TimeOfDay(hour: 18, minute: 60).minute - TimeOfDay.now().minute;
+    }
+  }
 
   List<BottomNavigationBarItem> items = const [
     BottomNavigationBarItem(

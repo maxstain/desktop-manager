@@ -33,13 +33,14 @@ class _ClockOutPageState extends State<ClockOutPage> {
       }
     });
   }
-  
+
   void _timer() {
     Future.delayed(const Duration(seconds: 1), () {
       checker();
       _timer();
     });
   }
+
   @override
   void initState() {
     super.initState();
@@ -100,6 +101,7 @@ class _ClockOutPageState extends State<ClockOutPage> {
                       style: TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.bold,
+                        overflow: TextOverflow.ellipsis,
                       ),
                     ),
                     hours > 0
@@ -132,6 +134,7 @@ class _ClockOutPageState extends State<ClockOutPage> {
                       style: TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.bold,
+                        overflow: TextOverflow.ellipsis,
                       ),
                     ),
                     hours > 0
