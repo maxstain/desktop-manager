@@ -1,4 +1,5 @@
 import 'package:desktop_manager/Views/ClouckOutPage.dart';
+import 'package:desktop_manager/Views/DaysRemainingPage.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 
@@ -91,7 +92,7 @@ class _HomePageState extends State<HomePage> {
             icon: const Icon(Icons.calendar_month_rounded),
             onPressed: () => Navigator.of(context).push(
               MaterialPageRoute(
-                builder: (context) => HomePage(title: widget.title),
+                builder: (context) => const DaysRemainingPage(),
               ),
             ),
           ),
