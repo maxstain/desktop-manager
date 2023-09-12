@@ -1,6 +1,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
     <application
-        android:label="desktop_manager"
+        android:label="Slavery Footprint"
         android:name="${applicationName}"
         android:icon="@mipmap/launcher_icon">
         <activity
