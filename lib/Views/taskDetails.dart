@@ -17,6 +17,11 @@ class _TaskDetailsPageState extends State<TaskDetailsPage> {
   }
 
   @override
+  void dispose() {
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
