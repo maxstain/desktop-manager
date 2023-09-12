@@ -172,8 +172,17 @@ class _TaskManagerPageState extends State<TaskManagerPage> {
                             color: Colors.white,
                             border: Border.all(
                               color: Theme.of(context).colorScheme.secondary,
-                              width: 2,
+                              width: 0,
                             ),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.grey.withOpacity(0.5),
+                                spreadRadius: 1,
+                                blurRadius: 2,
+                                offset: const Offset(
+                                    0, 3), // changes position of shadow
+                              ),
+                            ],
                           ),
                           margin: const EdgeInsets.symmetric(
                             horizontal: 20,
