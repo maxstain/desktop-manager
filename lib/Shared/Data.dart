@@ -104,6 +104,7 @@ class SharedData {
     SharedData().tasks.removeAt(index);
     ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
       content: Text('Task completed!'),
-    ));
+      ),
+    );
   }
 }
