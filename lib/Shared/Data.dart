@@ -10,6 +10,8 @@ class SharedData {
   int seconds = 0;
   double offset = 30;
 
+  List<String> tasks = [];
+
   SharedData() {
     if (DateTime.now().weekday == DateTime.saturday ||
         DateTime.now().weekday == DateTime.sunday) {
