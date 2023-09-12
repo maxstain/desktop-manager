@@ -188,19 +188,11 @@ class _TaskManagerPageState extends State<TaskManagerPage> {
                               ),
                             ),
                             subtitle: Text(
-                              SharedData().tasks[index].progress == 0
-                                  ? 'Not started'
-                                  : SharedData().tasks[index].progress == 1
-                                      ? 'In progress'
-                                      : 'Completed',
+                              SharedData().tasks[index].description,
                               style: TextStyle(
                                 fontSize: 16,
                                 fontWeight: FontWeight.bold,
-                                color: SharedData().tasks[index].progress == 0
-                                    ? Colors.red
-                                    : SharedData().tasks[index].progress == 1
-                                        ? Colors.amber
-                                        : Colors.green,
+                                color: Colors.grey[600],
                               ),
                             ),
                             trailing: IconButton(

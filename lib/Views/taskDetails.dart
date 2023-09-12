@@ -11,18 +11,9 @@ class TaskDetailsPage extends StatefulWidget {
 }
 
 class _TaskDetailsPageState extends State<TaskDetailsPage> {
-  void refresh() {
-    Future.delayed(const Duration(seconds: 1), () {
-      SharedData().tasks[widget.index].setProgressByTimeRemaining();
-      refresh();
-    });
-  }
-
   @override
   void initState() {
     super.initState();
-    SharedData().tasks[widget.index].setProgressByTimeRemaining();
-    refresh();
   }
 
   @override
@@ -30,26 +21,6 @@ class _TaskDetailsPageState extends State<TaskDetailsPage> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Task Details'),
-        bottom: PreferredSize(
-          preferredSize: const Size.fromHeight(20.0),
-          child: Column(
-            children: [
-              Text(
-                'Progress: ${SharedData().tasks[widget.index].progress * 100}%',
-                style: const TextStyle(
-                  fontSize: 12,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              LinearProgressIndicator(
-                value: SharedData().tasks[widget.index].progress,
-                color: Colors.deepPurple,
-                minHeight: 10.0,
-                backgroundColor: Colors.grey[300],
-              ),
-            ],
-          ),
-        ),
       ),
       body: ListView(
         children: [
@@ -59,11 +30,13 @@ class _TaskDetailsPageState extends State<TaskDetailsPage> {
           ),
           ListTile(
             title: const Text('Start Time'),
-            subtitle: Text('${SharedData().tasks[widget.index].startTime}'),
+            subtitle: Text('${SharedData().tasks[widget.index].startTime}'
+                .substring(0, 16)),
           ),
           ListTile(
             title: const Text('End Time'),
-            subtitle: Text('${SharedData().tasks[widget.index].endTime}'),
+            subtitle: Text(
+                '${SharedData().tasks[widget.index].endTime}'.substring(0, 16)),
           ),
         ],
       ),
