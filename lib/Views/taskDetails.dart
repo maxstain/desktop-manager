@@ -10,16 +10,32 @@ class TaskDetailsPage extends StatefulWidget {
 }
 
 class _TaskDetailsPageState extends State<TaskDetailsPage> {
+
+  @override
+  void initState() {
+    super.initState();
+    SharedData().tasks[widget.index].setProgressByTimeRemaining();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
           title: const Text('Task Details'),
           bottom: PreferredSize(
-            preferredSize: const Size.fromHeight(4.0),
-            child: LinearProgressIndicator(
-              value: SharedData().tasks[widget.index].progress,
-              color: Colors.deepPurple,
+            preferredSize: const Size.fromHeight(10.0),
+            child: Container(
+              decoration: const BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.only(
+                  bottomLeft: Radius.circular(20),
+                  bottomRight: Radius.circular(20),
+                ),
+              ),
+              child: LinearProgressIndicator(
+                value: SharedData().tasks[widget.index].progress,
+                color: Colors.deepPurple,
+              ),
             ),
           )
       ),

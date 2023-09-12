@@ -46,12 +46,8 @@ class Task {
   }
 
   void setProgressByTimeRemaining() {
-    if (DateTime.now().isAfter(endTime)) {
-      progress = 1;
-    } else {
-      progress = DateTime.now().difference(startTime).inSeconds /
-          endTime.difference(startTime).inSeconds;
-    }
+    progress = DateTime.now().difference(startTime).inSeconds /
+        endTime.difference(startTime).inSeconds;
   }
 
   void complete() {
