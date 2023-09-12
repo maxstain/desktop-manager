@@ -1,4 +1,5 @@
 // Shared variables
+import 'package:desktop_manager/Models/Task.dart';
 import 'package:flutter/material.dart';
 
 class SharedData {
@@ -10,7 +11,7 @@ class SharedData {
   int seconds = 0;
   double offset = 30;
 
-  List<String> tasks = [];
+  List<Task> tasks = [];
 
   SharedData() {
     if (DateTime.now().weekday == DateTime.saturday ||

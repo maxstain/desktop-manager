@@ -186,9 +186,16 @@ class _ClockOutPageState extends State<ClockOutPage> {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         Text(
-                          SharedData().tasks[index],
+                          SharedData().tasks[index].name,
                           style: const TextStyle(
                             fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        Text(
+                          SharedData().tasks[index].description,
+                          style: const TextStyle(
+                            fontSize: 16,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
