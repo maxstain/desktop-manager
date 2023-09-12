@@ -1,14 +1,14 @@
 import 'package:desktop_manager/Shared/Data.dart';
 import 'package:flutter/material.dart';
 
-class ClockOutPage extends StatefulWidget {
-  const ClockOutPage({Key? key}) : super(key: key);
+class TaskManagerPage extends StatefulWidget {
+  const TaskManagerPage({Key? key}) : super(key: key);
 
   @override
-  State<ClockOutPage> createState() => _ClockOutPageState();
+  State<TaskManagerPage> createState() => _TaskManagerPageState();
 }
 
-class _ClockOutPageState extends State<ClockOutPage> {
+class _TaskManagerPageState extends State<TaskManagerPage> {
   void checker() {
     setState(() {
       if (DateTime.now().weekday == DateTime.saturday ||
@@ -73,7 +73,7 @@ class _ClockOutPageState extends State<ClockOutPage> {
                     vertical: 10,
                   ),
                   child: const Text(
-                    'Time Remaining',
+                    'Task Manager',
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       fontSize: 24,
@@ -203,7 +203,6 @@ class _ClockOutPageState extends State<ClockOutPage> {
                     ),
                   );
                 },
-              )
-    );
+              ));
   }
 }

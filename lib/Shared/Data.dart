@@ -50,7 +50,7 @@ class SharedData {
     ),
     BottomNavigationBarItem(
       icon: Icon(Icons.lock_clock_rounded),
-      label: 'Clock Out Time',
+      label: 'Task Manager',
     ),
     BottomNavigationBarItem(
       icon: Icon(Icons.calendar_month_rounded),

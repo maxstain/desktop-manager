@@ -1,6 +1,6 @@
 // ignore_for_file: must_be_immutable
 
-import 'package:desktop_manager/Views/ClouckOutPage.dart';
+import 'package:desktop_manager/Views/TaskManagerPage.dart';
 import 'package:desktop_manager/Views/DaysRemainingPage.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
@@ -81,7 +81,7 @@ class _HomePageState extends State<HomePage> {
               isLastDay: isLastDay,
             )
           : index == 1
-              ? const ClockOutPage()
+              ? const TaskManagerPage()
               : const DaysRemainingPage(),
     );
   }
