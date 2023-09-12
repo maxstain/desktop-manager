@@ -10,11 +10,18 @@ class TaskDetailsPage extends StatefulWidget {
 }
 
 class _TaskDetailsPageState extends State<TaskDetailsPage> {
+  void refresh() {
+    Future.delayed(const Duration(seconds: 1), () {
+      SharedData().tasks[widget.index].setProgressByTimeRemaining();
+      refresh();
+    });
+  }
 
   @override
   void initState() {
     super.initState();
     SharedData().tasks[widget.index].setProgressByTimeRemaining();
+    refresh();
   }
 
   @override
@@ -23,22 +30,25 @@ class _TaskDetailsPageState extends State<TaskDetailsPage> {
       appBar: AppBar(
           title: const Text('Task Details'),
           bottom: PreferredSize(
-            preferredSize: const Size.fromHeight(10.0),
-            child: Container(
-              decoration: const BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.only(
-                  bottomLeft: Radius.circular(20),
-                  bottomRight: Radius.circular(20),
+            preferredSize: const Size.fromHeight(20.0),
+            child: Column(
+              children: [
+                Text(
+                  'Progress: ${SharedData().tasks[widget.index].progress * 100}%',
+                  style: const TextStyle(
+                    fontSize: 12,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
-              ),
-              child: LinearProgressIndicator(
-                value: SharedData().tasks[widget.index].progress,
-                color: Colors.deepPurple,
-              ),
+                LinearProgressIndicator(
+                  value: SharedData().tasks[widget.index].progress,
+                  color: Colors.deepPurple,
+                  minHeight: 10.0,
+                  backgroundColor: Colors.grey[300],
+                ),
+              ],
             ),
-          )
-      ),
+          )),
       body: ListView(
         children: [
           ListTile(
