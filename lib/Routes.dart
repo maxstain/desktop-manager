@@ -19,3 +19,18 @@ Route<dynamic> generateRoute(RouteSettings settings) {
       return MaterialPageRoute(builder: (context) => const HomePage());
   }
 }
+
+class Routes {
+  static const String home = '/home';
+  static const String taskManager = '/taskManager';
+  static const String daysRemaining = '/daysRemaining';
+  static const String settings = '/settings';
+  static const String error = '/error';
+
+  static final routes = <String, WidgetBuilder>{
+    home: (BuildContext context) => const HomePage(),
+    taskManager: (BuildContext context) => const TaskManagerPage(),
+    daysRemaining: (BuildContext context) => const DaysRemainingPage(),
+    '/': (BuildContext context) => const HomePage(),
+  };
+}

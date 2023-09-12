@@ -1,3 +1,4 @@
+import 'package:desktop_manager/Routes.dart';
 import 'package:desktop_manager/Shared/Data.dart';
 import 'package:desktop_manager/Views/HomePage.dart';
 import 'package:flutter/material.dart';
@@ -14,7 +15,6 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  // This widget is the root of your application.
 
   @override
   void initState() {
@@ -36,6 +36,7 @@ class _MyAppState extends State<MyApp> {
         useMaterial3: true,
       ),
       home: const HomePage(),
+      routes: Routes.routes,
     );
   }
 }
