@@ -100,11 +100,7 @@ class SharedData {
     );
   }
 
-  void completeTask(BuildContext context, int index) {
+  void completeTask(int index) {
     SharedData().tasks.removeAt(index);
-    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-      content: Text('Task completed!'),
-      ),
-    );
   }
 }

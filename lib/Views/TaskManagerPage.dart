@@ -206,7 +206,12 @@ class _TaskManagerPageState extends State<TaskManagerPage> {
                             trailing: IconButton(
                               onPressed: () {
                                 setState(() {
-                                  SharedData().completeTask(context, index);
+                                  SharedData().completeTask(index);
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    const SnackBar(
+                                      content: Text('Task completed!'),
+                                    ),
+                                  );
                                 });
                               },
                               icon: const Icon(

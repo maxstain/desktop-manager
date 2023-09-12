@@ -77,7 +77,12 @@ class _TaskDetailsPageState extends State<TaskDetailsPage> {
             ),
             onPressed: () {
               setState(() {
-                SharedData().completeTask(context, index);
+                SharedData().completeTask(index);
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(
+                    content: Text('Task completed!'),
+                  ),
+                );
               });
             },
             child: Container(
