@@ -13,8 +13,8 @@ class SharedData {
 
   List<Task> tasks = [
     Task(
-      'Task 1',
-      'This is a description for task 1',
+      'Data Dictionary',
+      'Correct the data dictionary that MGR revised',
       DateTime(2023, 9, 12, 9),
       DateTime(2023, 9, 12, 17),
       false,
@@ -99,13 +99,11 @@ class SharedData {
       },
     );
   }
-}
 
-// Path: lib/Views/DaysRemainingPage.dart
-// Path: lib/Views/ClockOutPage.dart
-// Path: lib/Views/HomePage.dart
-// Path: lib/Views/SettingsPage.dart
-// Path: lib/Views/SignInPage.dart
-// Path: lib/Views/SignUpPage.dart
-// Path: lib/Views/WelcomePage.dart
-// Path: lib/Views/SplashPage.dart
+  void completeTask(BuildContext context, int index) {
+    SharedData().tasks.removeAt(index);
+    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+      content: Text('Task completed!'),
+    ));
+  }
+}

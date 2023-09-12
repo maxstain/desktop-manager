@@ -188,20 +188,25 @@ class _TaskManagerPageState extends State<TaskManagerPage> {
                               ),
                             ),
                             subtitle: Text(
-                              SharedData().tasks[index].description,
-                              style: const TextStyle(
+                              SharedData().tasks[index].progress == 0
+                                  ? 'Not started'
+                                  : SharedData().tasks[index].progress == 1
+                                      ? 'In progress'
+                                      : 'Completed',
+                              style: TextStyle(
                                 fontSize: 16,
                                 fontWeight: FontWeight.bold,
+                                color: SharedData().tasks[index].progress == 0
+                                    ? Colors.red
+                                    : SharedData().tasks[index].progress == 1
+                                        ? Colors.amber
+                                        : Colors.green,
                               ),
                             ),
                             trailing: IconButton(
                               onPressed: () {
                                 setState(() {
-                                  SharedData().tasks.removeAt(index);
-                                  ScaffoldMessenger.of(context)
-                                      .showSnackBar(const SnackBar(
-                                    content: Text('Task completed!'),
-                                  ));
+                                  SharedData().completeTask(context, index);
                                 });
                               },
                               icon: const Icon(
