@@ -68,6 +68,7 @@ class _TaskDetailsPageState extends State<TaskDetailsPage> {
         ],
       ),
       bottomSheet: Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
           TextButton(
