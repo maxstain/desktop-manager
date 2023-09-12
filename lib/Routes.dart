@@ -31,6 +31,5 @@ class Routes {
     home: (BuildContext context) => const HomePage(),
     taskManager: (BuildContext context) => const TaskManagerPage(),
     daysRemaining: (BuildContext context) => const DaysRemainingPage(),
-    '/': (BuildContext context) => const HomePage(),
   };
 }
