@@ -1,4 +1,5 @@
 import 'package:desktop_manager/Shared/Data.dart';
+import 'package:desktop_manager/Views/taskDetails.dart';
 import 'package:flutter/material.dart';
 
 class TaskManagerPage extends StatefulWidget {
@@ -196,22 +197,24 @@ class _TaskManagerPageState extends State<TaskManagerPage> {
                             trailing: IconButton(
                               onPressed: () {
                                 setState(() {
-                                  SharedData().tasks[index].complete();
-
+                                  SharedData().tasks.removeAt(index);
                                   ScaffoldMessenger.of(context)
                                       .showSnackBar(const SnackBar(
                                     content: Text('Task completed!'),
                                   ));
-                                  SharedData().tasks.remove(
-                                        SharedData().tasks[index],
-                                      );
                                 });
                               },
-                              icon: const Icon(Icons.check),
+                              icon: const Icon(
+                                  Icons.check_circle_outline_rounded),
                             ),
                             onTap: () {
-                              Navigator.pushNamed(context, '/taskDetails',
-                                  arguments: index);
+                              Navigator.of(context).push(
+                                MaterialPageRoute(
+                                  builder: (context) => TaskDetailsPage(
+                                    index: index,
+                                  ),
+                                ),
+                              );
                             },
                           ),
                         )
