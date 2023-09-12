@@ -11,7 +11,37 @@ class SharedData {
   int seconds = 0;
   double offset = 30;
 
-  List<Task> tasks = [];
+  List<Task> tasks = [
+    Task(
+      'Task 1',
+      'This is a description for task 1',
+      DateTime.now(),
+      DateTime.now(),
+      false,
+    ),
+    Task(
+      'Task 2',
+      'This is a description for task 2',
+      DateTime.now(),
+      DateTime.now(),
+      true,
+    ),
+  ];
+
+  List<BottomNavigationBarItem> items = const [
+    BottomNavigationBarItem(
+      icon: Icon(Icons.home),
+      label: 'Home',
+    ),
+    BottomNavigationBarItem(
+      icon: Icon(Icons.lock_clock_rounded),
+      label: 'Task Manager',
+    ),
+    BottomNavigationBarItem(
+      icon: Icon(Icons.calendar_month_rounded),
+      label: 'Total Days Remaining',
+    ),
+  ];
 
   SharedData() {
     if (DateTime.now().weekday == DateTime.saturday ||
@@ -42,21 +72,6 @@ class SharedData {
       isFree = false;
     }
   }
-
-  List<BottomNavigationBarItem> items = const [
-    BottomNavigationBarItem(
-      icon: Icon(Icons.home),
-      label: 'Home',
-    ),
-    BottomNavigationBarItem(
-      icon: Icon(Icons.lock_clock_rounded),
-      label: 'Task Manager',
-    ),
-    BottomNavigationBarItem(
-      icon: Icon(Icons.calendar_month_rounded),
-      label: 'Total Days Remaining',
-    ),
-  ];
 
   void checker() {
     if (DateTime.now().weekday == DateTime.saturday ||
