@@ -29,22 +29,6 @@ class Task {
         'isComplete': isComplete,
       };
 
-  set setName(String name) {
-    this.name = name;
-  }
-
-  set setDescription(String description) {
-    this.description = description;
-  }
-
-  set setStartTime(DateTime startTime) {
-    this.startTime = startTime;
-  }
-
-  set setEndTime(DateTime endTime) {
-    this.endTime = endTime;
-  }
-
   void setProgressByTimeRemaining() {
     progress = DateTime.now().difference(startTime).inSeconds /
         endTime.difference(startTime).inSeconds;
