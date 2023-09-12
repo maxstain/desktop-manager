@@ -12,13 +12,13 @@ class SharedData {
   double offset = 30;
 
   List<Task> tasks = [
-    Task(
-      'Data Dictionary',
-      'Correct the data dictionary that MGR revised',
-      DateTime(2023, 9, 12, 9),
-      DateTime(2023, 9, 12, 17),
-      false,
-    ),
+    // Task(
+    //   'Data Dictionary',
+    //   'Correct the data dictionary that MGR revised',
+    //   DateTime(2023, 9, 12, 9),
+    //   DateTime(2023, 9, 12, 17),
+    //   false,
+    // ),
   ];
 
   List<BottomNavigationBarItem> items = const [
@@ -102,5 +102,11 @@ class SharedData {
 
   void completeTask(int index) {
     SharedData().tasks.removeAt(index);
+  }
+
+  void addTask(
+      String name, String description, DateTime startTime, DateTime endTime) {
+    Task task = Task(name, description, startTime, endTime, false);
+    SharedData().tasks.add(task);
   }
 }

@@ -10,6 +10,11 @@ class TaskManagerPage extends StatefulWidget {
 }
 
 class _TaskManagerPageState extends State<TaskManagerPage> {
+  TextEditingController nameController = TextEditingController();
+  TextEditingController descriptionController = TextEditingController();
+  late DateTime startTimeController;
+  late DateTime endTimeController;
+
   void checker() {
     setState(() {
       if (DateTime.now().weekday == DateTime.saturday ||
@@ -155,7 +160,98 @@ class _TaskManagerPageState extends State<TaskManagerPage> {
                     ),
                     ElevatedButton(
                       onPressed: () {
-                        Navigator.pushNamed(context, '/addTask');
+                        showDialog(
+                            context: context,
+                            builder: (context) {
+                              return AlertDialog(
+                                title: const Text('Add Task'),
+                                content: ListView(
+                                  shrinkWrap: true,
+                                  children: [
+                                    TextField(
+                                      controller: nameController,
+                                      decoration: const InputDecoration(
+                                        labelText: 'Task Name',
+                                      ),
+                                    ),
+                                    TextField(
+                                      controller: descriptionController,
+                                      decoration: const InputDecoration(
+                                        labelText: 'Task Description',
+                                      ),
+                                    ),
+                                    Row(
+                                      children: [
+                                        const Text('Start Time: '),
+                                        ElevatedButton(
+                                          onPressed: () async {
+                                            startTimeController =
+                                                await showTimePicker(
+                                              context: context,
+                                              initialTime: TimeOfDay.now(),
+                                            ).then((value) {
+                                              return DateTime(
+                                                DateTime.now().year,
+                                                DateTime.now().month,
+                                                DateTime.now().day,
+                                                value!.hour,
+                                                value.minute,
+                                              );
+                                            });
+                                          },
+                                          child: const Text('Select Time'),
+                                        ),
+                                      ],
+                                    ),
+                                    Row(
+                                      children: [
+                                        const Text('End Time: '),
+                                        ElevatedButton(
+                                          onPressed: () async {
+                                            endTimeController =
+                                                await showTimePicker(
+                                              context: context,
+                                              initialTime: TimeOfDay.now(),
+                                            ).then((value) {
+                                              return DateTime(
+                                                DateTime.now().year,
+                                                DateTime.now().month,
+                                                DateTime.now().day,
+                                                value!.hour,
+                                                value.minute,
+                                              );
+                                            });
+                                          },
+                                          child: const Text('Select Time'),
+                                        ),
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                                actions: [
+                                  TextButton(
+                                    onPressed: () {
+                                      Navigator.pop(context);
+                                    },
+                                    child: const Text('Cancel'),
+                                  ),
+                                  TextButton(
+                                    onPressed: () async {
+                                      setState(() {
+                                        SharedData().addTask(
+                                          nameController.text,
+                                          descriptionController.text,
+                                          startTimeController,
+                                          endTimeController,
+                                        );
+                                        Navigator.pop(context);
+                                      });
+                                    },
+                                    child: const Text('Add Task'),
+                                  ),
+                                ],
+                              );
+                            });
                       },
                       child: const Text('Add Task'),
                     ),
