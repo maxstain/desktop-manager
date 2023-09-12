@@ -14,12 +14,19 @@ class _TaskDetailsPageState extends State<TaskDetailsPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(SharedData().tasks[widget.index].name),
+          title: const Text('Task Details'),
+          bottom: PreferredSize(
+            preferredSize: const Size.fromHeight(4.0),
+            child: LinearProgressIndicator(
+              value: SharedData().tasks[widget.index].progress,
+              color: Colors.deepPurple,
+            ),
+          )
       ),
       body: ListView(
         children: [
           ListTile(
-            title: Text(SharedData().tasks[widget.index].name),
+            title: Text('Name: ${SharedData().tasks[widget.index].name}'),
             subtitle: Text(SharedData().tasks[widget.index].description),
           ),
           ListTile(

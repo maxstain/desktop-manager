@@ -4,6 +4,7 @@ class Task {
   late final DateTime startTime;
   late final DateTime endTime;
   late bool isComplete;
+  late double progress = 0;
 
   Task(
     this.name,
@@ -42,6 +43,15 @@ class Task {
 
   set setEndTime(DateTime endTime) {
     this.endTime = endTime;
+  }
+
+  void setProgressByTimeRemaining() {
+    if (DateTime.now().isAfter(endTime)) {
+      progress = 1;
+    } else {
+      progress = DateTime.now().difference(startTime).inSeconds /
+          endTime.difference(startTime).inSeconds;
+    }
   }
 
   void complete() {
