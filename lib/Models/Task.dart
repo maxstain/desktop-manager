@@ -1,9 +1,9 @@
 class Task {
-  final String name;
-  final String description;
-  final DateTime startTime;
-  final DateTime endTime;
-  final bool isComplete;
+  late final String name;
+  late final String description;
+  late final DateTime startTime;
+  late final DateTime endTime;
+  late bool isComplete;
 
   Task(
     this.name,
@@ -27,4 +27,24 @@ class Task {
         'endTime': endTime.toString(),
         'isComplete': isComplete,
       };
+
+  set setName(String name) {
+    this.name = name;
+  }
+
+  set setDescription(String description) {
+    this.description = description;
+  }
+
+  set setStartTime(DateTime startTime) {
+    this.startTime = startTime;
+  }
+
+  set setEndTime(DateTime endTime) {
+    this.endTime = endTime;
+  }
+
+  void complete() {
+    isComplete = true;
+  }
 }

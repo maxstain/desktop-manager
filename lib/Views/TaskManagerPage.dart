@@ -168,9 +168,7 @@ class _TaskManagerPageState extends State<TaskManagerPage> {
                       ? Container(
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(10),
-                            color: SharedData().isFree == false
-                                ? Colors.white
-                                : Colors.green,
+                            color: Colors.white,
                             border: Border.all(
                               color: Theme.of(context).colorScheme.secondary,
                               width: 2,
@@ -180,27 +178,41 @@ class _TaskManagerPageState extends State<TaskManagerPage> {
                             horizontal: 20,
                             vertical: 10,
                           ),
-                          width: MediaQuery.of(context).size.width - offset,
-                          height: 100,
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              Text(
-                                SharedData().tasks[index].name,
-                                style: const TextStyle(
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.bold,
-                                ),
+                          child: ListTile(
+                            title: Text(
+                              SharedData().tasks[index].name,
+                              style: const TextStyle(
+                                fontSize: 24,
+                                fontWeight: FontWeight.bold,
                               ),
-                              Text(
-                                SharedData().tasks[index].description,
-                                style: const TextStyle(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.bold,
-                                ),
+                            ),
+                            subtitle: Text(
+                              SharedData().tasks[index].description,
+                              style: const TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
                               ),
-                            ],
+                            ),
+                            trailing: IconButton(
+                              onPressed: () {
+                                setState(() {
+                                  SharedData().tasks[index].complete();
+
+                                  ScaffoldMessenger.of(context)
+                                      .showSnackBar(const SnackBar(
+                                    content: Text('Task completed!'),
+                                  ));
+                                  SharedData().tasks.remove(
+                                        SharedData().tasks[index],
+                                      );
+                                });
+                              },
+                              icon: const Icon(Icons.check),
+                            ),
+                            onTap: () {
+                              Navigator.pushNamed(context, '/taskDetails',
+                                  arguments: index);
+                            },
                           ),
                         )
                       : Container();

@@ -19,13 +19,6 @@ class SharedData {
       DateTime.now(),
       false,
     ),
-    Task(
-      'Task 2',
-      'This is a description for task 2',
-      DateTime.now(),
-      DateTime.now(),
-      true,
-    ),
   ];
 
   List<BottomNavigationBarItem> items = const [
