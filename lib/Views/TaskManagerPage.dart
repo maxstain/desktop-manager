@@ -403,7 +403,7 @@ class _TaskManagerPageState extends State<TaskManagerPage> {
                     openAddTaskDialog();
                   });
                 },
-                child: const Icon(Icons.delete),
+                child: const Icon(Icons.add),
               ),
         body: tasks.isEmpty
             ? Center(
