@@ -42,40 +42,6 @@ class _TaskDetailsPageState extends State<TaskDetailsPage> {
           ),
         ],
       ),
-      bottomSheet: Row(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: [
-          TextButton(
-            style: TextButton.styleFrom(
-              backgroundColor: Colors.deepPurple,
-            ),
-            onPressed: () {
-              setState(() {
-                widget.task.complete();
-                ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(
-                    content: Text('Task completed!'),
-                  ),
-                );
-              });
-            },
-            child: Container(
-              padding: const EdgeInsets.symmetric(
-                horizontal: 20,
-                vertical: 10,
-              ),
-              child: const Text(
-                'Complete',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 18,
-                ),
-              ),
-            ),
-          ),
-        ],
-      ),
     );
   }
 }
