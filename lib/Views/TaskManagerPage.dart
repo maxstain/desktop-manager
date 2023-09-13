@@ -99,6 +99,8 @@ class _TaskManagerPageState extends State<TaskManagerPage> {
             actions: [
               TextButton(
                 onPressed: () {
+                  nameController.clear();
+                  descriptionController.clear();
                   Navigator.pop(context);
                 },
                 child: const Text('Cancel'),
@@ -112,6 +114,8 @@ class _TaskManagerPageState extends State<TaskManagerPage> {
                       startTimeController,
                       endTimeController,
                     );
+                    nameController.clear();
+                    descriptionController.clear();
                     Navigator.pop(context);
                   });
                 },
@@ -220,7 +224,6 @@ class _TaskManagerPageState extends State<TaskManagerPage> {
                             startTimeController,
                             endTimeController,
                           );
-                          print('Tasks: ${tasks.length}');
                           nameController.clear();
                           descriptionController.clear();
                         });
