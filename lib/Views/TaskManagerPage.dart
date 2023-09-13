@@ -28,6 +28,236 @@ class _TaskManagerPageState extends State<TaskManagerPage> {
     // ),
   ];
 
+  void openAddTaskDialog() {
+    if (Platform.isAndroid || Platform.isIOS) {
+      showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: const Text('Add Task'),
+            content: ListView(
+              shrinkWrap: true,
+              children: [
+                TextField(
+                  controller: nameController,
+                  decoration: const InputDecoration(
+                    labelText: 'Task Name',
+                  ),
+                ),
+                TextField(
+                  controller: descriptionController,
+                  decoration: const InputDecoration(
+                    labelText: 'Task Description',
+                  ),
+                ),
+                Row(
+                  children: [
+                    const Text('Start Time: '),
+                    ElevatedButton(
+                      onPressed: () async {
+                        startTimeController = await showTimePicker(
+                          context: context,
+                          initialTime: TimeOfDay.now(),
+                        ).then((value) {
+                          return DateTime(
+                            DateTime.now().year,
+                            DateTime.now().month,
+                            DateTime.now().day,
+                            value!.hour,
+                            value.minute,
+                          );
+                        });
+                      },
+                      child: const Text('Select Time'),
+                    ),
+                  ],
+                ),
+                Row(
+                  children: [
+                    const Text('End Time: '),
+                    ElevatedButton(
+                      onPressed: () async {
+                        endTimeController = await showTimePicker(
+                          context: context,
+                          initialTime: TimeOfDay.now(),
+                        ).then((value) {
+                          return DateTime(
+                            DateTime.now().year,
+                            DateTime.now().month,
+                            DateTime.now().day,
+                            value!.hour,
+                            value.minute,
+                          );
+                        });
+                      },
+                      child: const Text('Select Time'),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                child: const Text('Cancel'),
+              ),
+              TextButton(
+                onPressed: () async {
+                  setState(() {
+                    addTask(
+                      nameController.text,
+                      descriptionController.text,
+                      startTimeController,
+                      endTimeController,
+                    );
+                    Navigator.pop(context);
+                  });
+                },
+                child: const Text('Add Task'),
+              ),
+            ],
+          );
+        },
+      );
+    } else if (Platform.isWindows || Platform.isLinux || Platform.isMacOS) {
+      showBottomSheet(
+        backgroundColor: Colors.grey[100],
+        enableDrag: true,
+        constraints: BoxConstraints(
+          maxHeight: MediaQuery.of(context).size.height / 2,
+        ),
+        context: context,
+        builder: (context) {
+          return Padding(
+            padding: const EdgeInsets.all(20.0),
+            child: ListView(
+              children: [
+                TextField(
+                  controller: nameController,
+                  decoration: const InputDecoration(
+                    labelText: 'Task Name',
+                  ),
+                ),
+                TextField(
+                  controller: descriptionController,
+                  decoration: const InputDecoration(
+                    labelText: 'Task Description',
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(
+                    vertical: 10.0,
+                  ),
+                  child: Row(
+                    children: [
+                      const Text('Start Time: '),
+                      ElevatedButton(
+                        onPressed: () async {
+                          startTimeController = await showTimePicker(
+                            context: context,
+                            initialTime: TimeOfDay.now(),
+                          ).then((value) {
+                            return DateTime(
+                              DateTime.now().year,
+                              DateTime.now().month,
+                              DateTime.now().day,
+                              value!.hour,
+                              value.minute,
+                            );
+                          });
+                        },
+                        child: const Text('Select Time'),
+                      ),
+                    ],
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(
+                    vertical: 10.0,
+                  ),
+                  child: Row(
+                    children: [
+                      const Text('End Time: '),
+                      ElevatedButton(
+                        onPressed: () async {
+                          endTimeController = await showTimePicker(
+                            context: context,
+                            initialTime: TimeOfDay.now(),
+                          ).then((value) {
+                            return DateTime(
+                              DateTime.now().year,
+                              DateTime.now().month,
+                              DateTime.now().day,
+                              value!.hour,
+                              value.minute,
+                            );
+                          });
+                        },
+                        child: const Text('Select Time'),
+                      ),
+                    ],
+                  ),
+                ),
+                SizedBox(
+                  height: MediaQuery.of(context).size.height / 10,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    TextButton(
+                      style: TextButton.styleFrom(
+                        primary: Colors.white,
+                        backgroundColor: Colors.green,
+                      ),
+                      onPressed: () {
+                        setState(() {
+                          addTask(
+                            nameController.text,
+                            descriptionController.text,
+                            startTimeController,
+                            endTimeController,
+                          );
+                          print('Tasks: ${tasks.length}');
+                          nameController.clear();
+                          descriptionController.clear();
+                        });
+                        Navigator.pop(context);
+                      },
+                      child: const Padding(
+                        padding: EdgeInsets.all(10.0),
+                        child: Text('Add Task'),
+                      ),
+                    ),
+                    TextButton(
+                      style: TextButton.styleFrom(
+                        primary: Colors.white,
+                        backgroundColor: Colors.red,
+                      ),
+                      onPressed: () {
+                        Navigator.pop(context);
+                        setState(() {
+                          nameController.clear();
+                          descriptionController.clear();
+                        });
+                      },
+                      child: const Padding(
+                        padding: EdgeInsets.all(10.0),
+                        child: Text('Cancel'),
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          );
+        },
+      );
+    }
+  }
+
   void completeTask(int index) {
     tasks.removeAt(index);
   }
@@ -165,6 +395,16 @@ class _TaskManagerPageState extends State<TaskManagerPage> {
             ),
           ),
         ),
+        floatingActionButton: tasks.isEmpty
+            ? null
+            : FloatingActionButton(
+                onPressed: () {
+                  setState(() {
+                    openAddTaskDialog();
+                  });
+                },
+                child: const Icon(Icons.delete),
+              ),
         body: tasks.isEmpty
             ? Center(
                 child: Column(
@@ -183,232 +423,7 @@ class _TaskManagerPageState extends State<TaskManagerPage> {
                     ),
                     ElevatedButton(
                       onPressed: () {
-                        if (Platform.isAndroid || Platform.isIOS) {
-                          showDialog(
-                            context: context,
-                            builder: (context) {
-                              return AlertDialog(
-                                title: const Text('Add Task'),
-                                content: ListView(
-                                  shrinkWrap: true,
-                                  children: [
-                                    TextField(
-                                      controller: nameController,
-                                      decoration: const InputDecoration(
-                                        labelText: 'Task Name',
-                                      ),
-                                    ),
-                                    TextField(
-                                      controller: descriptionController,
-                                      decoration: const InputDecoration(
-                                        labelText: 'Task Description',
-                                      ),
-                                    ),
-                                    Row(
-                                      children: [
-                                        const Text('Start Time: '),
-                                        ElevatedButton(
-                                          onPressed: () async {
-                                            startTimeController =
-                                                await showTimePicker(
-                                              context: context,
-                                              initialTime: TimeOfDay.now(),
-                                            ).then((value) {
-                                              return DateTime(
-                                                DateTime.now().year,
-                                                DateTime.now().month,
-                                                DateTime.now().day,
-                                                value!.hour,
-                                                value.minute,
-                                              );
-                                            });
-                                          },
-                                          child: const Text('Select Time'),
-                                        ),
-                                      ],
-                                    ),
-                                    Row(
-                                      children: [
-                                        const Text('End Time: '),
-                                        ElevatedButton(
-                                          onPressed: () async {
-                                            endTimeController =
-                                                await showTimePicker(
-                                              context: context,
-                                              initialTime: TimeOfDay.now(),
-                                            ).then((value) {
-                                              return DateTime(
-                                                DateTime.now().year,
-                                                DateTime.now().month,
-                                                DateTime.now().day,
-                                                value!.hour,
-                                                value.minute,
-                                              );
-                                            });
-                                          },
-                                          child: const Text('Select Time'),
-                                        ),
-                                      ],
-                                    ),
-                                  ],
-                                ),
-                                actions: [
-                                  TextButton(
-                                    onPressed: () {
-                                      Navigator.pop(context);
-                                    },
-                                    child: const Text('Cancel'),
-                                  ),
-                                  TextButton(
-                                    onPressed: () async {
-                                      setState(() {
-                                        addTask(
-                                          nameController.text,
-                                          descriptionController.text,
-                                          startTimeController,
-                                          endTimeController,
-                                        );
-                                        Navigator.pop(context);
-                                      });
-                                    },
-                                    child: const Text('Add Task'),
-                                  ),
-                                ],
-                              );
-                            },
-                          );
-                        } else if (Platform.isWindows ||
-                            Platform.isLinux ||
-                            Platform.isMacOS) {
-                          showBottomSheet(
-                            enableDrag: true,
-                            constraints: BoxConstraints(
-                              maxHeight: MediaQuery.of(context).size.height / 2,
-                            ),
-                            context: context,
-                            builder: (context) {
-                              return Padding(
-                                padding: const EdgeInsets.all(20.0),
-                                child: ListView(
-                                  children: [
-                                    TextField(
-                                      controller: nameController,
-                                      decoration: const InputDecoration(
-                                        labelText: 'Task Name',
-                                      ),
-                                    ),
-                                    TextField(
-                                      controller: descriptionController,
-                                      decoration: const InputDecoration(
-                                        labelText: 'Task Description',
-                                      ),
-                                    ),
-                                    Row(
-                                      children: [
-                                        const Text('Start Time: '),
-                                        ElevatedButton(
-                                          onPressed: () async {
-                                            startTimeController =
-                                                await showTimePicker(
-                                              context: context,
-                                              initialTime: TimeOfDay.now(),
-                                            ).then((value) {
-                                              return DateTime(
-                                                DateTime.now().year,
-                                                DateTime.now().month,
-                                                DateTime.now().day,
-                                                value!.hour,
-                                                value.minute,
-                                              );
-                                            });
-                                          },
-                                          child: const Text('Select Time'),
-                                        ),
-                                      ],
-                                    ),
-                                    Row(
-                                      children: [
-                                        const Text('End Time: '),
-                                        ElevatedButton(
-                                          onPressed: () async {
-                                            endTimeController =
-                                                await showTimePicker(
-                                              context: context,
-                                              initialTime: TimeOfDay.now(),
-                                            ).then((value) {
-                                              return DateTime(
-                                                DateTime.now().year,
-                                                DateTime.now().month,
-                                                DateTime.now().day,
-                                                value!.hour,
-                                                value.minute,
-                                              );
-                                            });
-                                          },
-                                          child: const Text('Select Time'),
-                                        ),
-                                      ],
-                                    ),
-                                    SizedBox(
-                                      height:
-                                          MediaQuery.of(context).size.height /
-                                              10,
-                                    ),
-                                    Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceEvenly,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.center,
-                                      children: [
-                                        TextButton(
-                                          style: TextButton.styleFrom(
-                                            primary: Colors.white,
-                                            backgroundColor: Colors.green,
-                                          ),
-                                          onPressed: () {
-                                            setState(() {
-                                              addTask(
-                                                nameController.text,
-                                                descriptionController.text,
-                                                startTimeController,
-                                                endTimeController,
-                                              );
-                                              print('Tasks: ${tasks.length}');
-                                              nameController.clear();
-                                              descriptionController.clear();
-                                            });
-                                            Navigator.pop(context);
-                                          },
-                                          child: const Padding(
-                                            padding: EdgeInsets.all(10.0),
-                                            child: Text('Add Task'),
-                                          ),
-                                        ),
-                                        TextButton(
-                                          style: TextButton.styleFrom(
-                                            primary: Colors.white,
-                                            backgroundColor: Colors.red,
-                                          ),
-                                          onPressed: () {
-                                            Navigator.pop(context);
-                                            setState(() {
-                                              nameController.clear();
-                                              descriptionController.clear();
-                                            });
-                                          },
-                                          child: const Padding(
-                                            padding: EdgeInsets.all(10.0),
-                                            child: Text('Cancel'),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ],
-                                ),
-                              );
-                            },
-                          );
-                        }
+                        openAddTaskDialog();
                       },
                       child: const Text('Add Task'),
                     ),
