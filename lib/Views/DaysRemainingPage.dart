@@ -80,7 +80,7 @@ void checker() {
             vertical: 10,
           ),
           width: MediaQuery.of(context).size.width - offset,
-          height: 100,
+          height: MediaQuery.of(context).size.height - 150,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
