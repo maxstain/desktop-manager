@@ -12,11 +12,13 @@ class TaskDetailsPage extends StatefulWidget {
 class _TaskDetailsPageState extends State<TaskDetailsPage> {
   @override
   void initState() {
+    setState(() {});
     super.initState();
   }
 
   @override
   void dispose() {
+    setState(() {});
     super.dispose();
   }
 
