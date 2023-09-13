@@ -145,9 +145,10 @@ class _HomeState extends State<Home> {
               width: 2,
             ),
           ),
-          margin: const EdgeInsets.symmetric(
-            horizontal: 20,
-            vertical: 10,
+          margin: const EdgeInsets.only(
+            right: 20,
+            left: 20,
+            bottom: 10,
           ),
           width: MediaQuery.of(context).size.width - offset,
           height: 100,
@@ -272,21 +273,16 @@ class _HomeState extends State<Home> {
           width: 300,
           options: LottieOptions(enableMergePaths: true),
         ),
-        Padding(
-          padding: const EdgeInsets.symmetric(
-            vertical: 10,
-          ),
-          child: Text(
-            widget.isFree == false && widget.isLastDay == false
-                ? 'You are currently not free'
-                : widget.isFree && widget.isLastDay
-                    ? 'YOU ARE FINALLY FREE!!!'
-                    : 'YOU ARE FREE FOR THE REST OF THE DAY!!',
-            textAlign: TextAlign.center,
-            style: const TextStyle(
-              fontSize: 30,
-              fontWeight: FontWeight.bold,
-            ),
+        Text(
+          widget.isFree == false && widget.isLastDay == false
+              ? 'You are currently not free'
+              : widget.isFree && widget.isLastDay
+                  ? 'YOU ARE FINALLY FREE!!!'
+                  : 'YOU ARE FREE FOR THE REST OF THE DAY!!',
+          textAlign: TextAlign.center,
+          style: const TextStyle(
+            fontSize: 30,
+            fontWeight: FontWeight.bold,
           ),
         ),
       ],
