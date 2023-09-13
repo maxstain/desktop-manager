@@ -29,9 +29,13 @@ class _HomePageState extends State<HomePage> {
           DateTime.now().weekday == DateTime.sunday) {
         isFree = true;
         isWeekend = true;
-      } else if (DateTime.now().hour >= 18) {
+      } else if (DateTime.now().hour >= 18 &&
+          DateTime.now().month != 7 &&
+          DateTime.now().month != 8) {
         isFree = true;
-      } else if (DateTime.now().hour < 9) {
+      } else if (DateTime.now().hour < 9 &&
+          DateTime.now().month != 7 &&
+          DateTime.now().month != 8) {
         isFree = true;
       } else if (DateTime.now().month == 7 || DateTime.now().month == 8) {
         if (DateTime.now().hour >= 16) {
@@ -43,7 +47,7 @@ class _HomePageState extends State<HomePage> {
       if (DateTime(2028, 12, 19) == DateTime.now()) {
         isLastDay = true;
       } else {
-        isFree = false;
+        isLastDay = false;
       }
     });
   }
@@ -186,38 +190,38 @@ class _HomeState extends State<Home> {
           width: MediaQuery.of(context).size.width - offset,
           height: 100,
           child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    const Text(
-                      // Time until clocking out (6:00 PM)
-                      'Time until clocking out:',
-                      style: TextStyle(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              const Text(
+                // Time until clocking out (6:00 PM)
+                'Time until clocking out:',
+                style: TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold,
+                  overflow: TextOverflow.ellipsis,
+                ),
+              ),
+              hours > 0
+                  ? Text(
+                      '$hours hours '
+                      '$minutes minutes',
+                      style: const TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                    )
+                  : Text(
+                      '$minutes minutes',
+                      style: const TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.bold,
                         overflow: TextOverflow.ellipsis,
                       ),
                     ),
-                    hours > 0
-                        ? Text(
-                            '$hours hours '
-                            '$minutes minutes',
-                            style: const TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.bold,
-                              overflow: TextOverflow.ellipsis,
-                            ),
-                          )
-                        : Text(
-                            '$minutes minutes',
-                            style: const TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.bold,
-                              overflow: TextOverflow.ellipsis,
-                            ),
-                          ),
-                  ],
-                ),
+            ],
+          ),
         ),
         Container(
           decoration: BoxDecoration(
