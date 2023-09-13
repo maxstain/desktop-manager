@@ -1,5 +1,4 @@
 // Shared variables
-import 'package:desktop_manager/Models/Task.dart';
 import 'package:flutter/material.dart';
 
 class SharedData {
@@ -10,16 +9,6 @@ class SharedData {
   int minutes = 0;
   int seconds = 0;
   double offset = 30;
-
-  List<Task> tasks = [
-    // Task(
-    //   'Data Dictionary',
-    //   'Correct the data dictionary that MGR revised',
-    //   DateTime(2023, 9, 12, 9),
-    //   DateTime(2023, 9, 12, 17),
-    //   false,
-    // ),
-  ];
 
   List<BottomNavigationBarItem> items = const [
     BottomNavigationBarItem(
@@ -98,15 +87,5 @@ class SharedData {
         checker();
       },
     );
-  }
-
-  void completeTask(int index) {
-    SharedData().tasks.removeAt(index);
-  }
-
-  void addTask(
-      String name, String description, DateTime startTime, DateTime endTime) {
-    Task task = Task(name, description, startTime, endTime, false);
-    SharedData().tasks.add(task);
   }
 }

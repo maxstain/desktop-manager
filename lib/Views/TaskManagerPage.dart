@@ -1,3 +1,6 @@
+import 'dart:io';
+
+import 'package:desktop_manager/Models/Task.dart';
 import 'package:desktop_manager/Shared/Data.dart';
 import 'package:desktop_manager/Views/taskDetails.dart';
 import 'package:flutter/material.dart';
@@ -14,6 +17,26 @@ class _TaskManagerPageState extends State<TaskManagerPage> {
   TextEditingController descriptionController = TextEditingController();
   late DateTime startTimeController;
   late DateTime endTimeController;
+
+  late final List<Task> tasks = [
+    // Task(
+    //   'Data Dictionary',
+    //   'Correct the data dictionary that MGR revised',
+    //   DateTime(2023, 9, 12, 9),
+    //   DateTime(2023, 9, 12, 17),
+    //   false,
+    // ),
+  ];
+
+  void completeTask(int index) {
+    tasks.removeAt(index);
+  }
+
+  void addTask(
+      String name, String description, DateTime startTime, DateTime endTime) {
+    Task task = Task(name, description, startTime, endTime, false);
+    tasks.add(task);
+  }
 
   void checker() {
     setState(() {
@@ -142,7 +165,7 @@ class _TaskManagerPageState extends State<TaskManagerPage> {
             ),
           ),
         ),
-        body: SharedData().tasks.isEmpty
+        body: tasks.isEmpty
             ? Center(
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -160,7 +183,8 @@ class _TaskManagerPageState extends State<TaskManagerPage> {
                     ),
                     ElevatedButton(
                       onPressed: () {
-                        showDialog(
+                        if (Platform.isAndroid || Platform.isIOS) {
+                          showDialog(
                             context: context,
                             builder: (context) {
                               return AlertDialog(
@@ -238,7 +262,7 @@ class _TaskManagerPageState extends State<TaskManagerPage> {
                                   TextButton(
                                     onPressed: () async {
                                       setState(() {
-                                        SharedData().addTask(
+                                        addTask(
                                           nameController.text,
                                           descriptionController.text,
                                           startTimeController,
@@ -251,7 +275,140 @@ class _TaskManagerPageState extends State<TaskManagerPage> {
                                   ),
                                 ],
                               );
-                            });
+                            },
+                          );
+                        } else if (Platform.isWindows ||
+                            Platform.isLinux ||
+                            Platform.isMacOS) {
+                          showBottomSheet(
+                            enableDrag: true,
+                            constraints: BoxConstraints(
+                              maxHeight: MediaQuery.of(context).size.height / 2,
+                            ),
+                            context: context,
+                            builder: (context) {
+                              return Padding(
+                                padding: const EdgeInsets.all(20.0),
+                                child: ListView(
+                                  children: [
+                                    TextField(
+                                      controller: nameController,
+                                      decoration: const InputDecoration(
+                                        labelText: 'Task Name',
+                                      ),
+                                    ),
+                                    TextField(
+                                      controller: descriptionController,
+                                      decoration: const InputDecoration(
+                                        labelText: 'Task Description',
+                                      ),
+                                    ),
+                                    Row(
+                                      children: [
+                                        const Text('Start Time: '),
+                                        ElevatedButton(
+                                          onPressed: () async {
+                                            startTimeController =
+                                                await showTimePicker(
+                                              context: context,
+                                              initialTime: TimeOfDay.now(),
+                                            ).then((value) {
+                                              return DateTime(
+                                                DateTime.now().year,
+                                                DateTime.now().month,
+                                                DateTime.now().day,
+                                                value!.hour,
+                                                value.minute,
+                                              );
+                                            });
+                                          },
+                                          child: const Text('Select Time'),
+                                        ),
+                                      ],
+                                    ),
+                                    Row(
+                                      children: [
+                                        const Text('End Time: '),
+                                        ElevatedButton(
+                                          onPressed: () async {
+                                            endTimeController =
+                                                await showTimePicker(
+                                              context: context,
+                                              initialTime: TimeOfDay.now(),
+                                            ).then((value) {
+                                              return DateTime(
+                                                DateTime.now().year,
+                                                DateTime.now().month,
+                                                DateTime.now().day,
+                                                value!.hour,
+                                                value.minute,
+                                              );
+                                            });
+                                          },
+                                          child: const Text('Select Time'),
+                                        ),
+                                      ],
+                                    ),
+                                    SizedBox(
+                                      height:
+                                          MediaQuery.of(context).size.height /
+                                              10,
+                                    ),
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceEvenly,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                      children: [
+                                        TextButton(
+                                          style: TextButton.styleFrom(
+                                            primary: Colors.white,
+                                            backgroundColor: Colors.green,
+                                          ),
+                                          onPressed: () {
+                                            setState(() {
+                                              addTask(
+                                                nameController.text,
+                                                descriptionController.text,
+                                                startTimeController,
+                                                endTimeController,
+                                              );
+                                              print('Tasks: ${tasks.length}');
+                                              nameController.clear();
+                                              descriptionController.clear();
+                                            });
+                                            Navigator.pop(context);
+                                          },
+                                          child: const Padding(
+                                            padding: EdgeInsets.all(10.0),
+                                            child: Text('Add Task'),
+                                          ),
+                                        ),
+                                        TextButton(
+                                          style: TextButton.styleFrom(
+                                            primary: Colors.white,
+                                            backgroundColor: Colors.red,
+                                          ),
+                                          onPressed: () {
+                                            Navigator.pop(context);
+                                            setState(() {
+                                              nameController.clear();
+                                              descriptionController.clear();
+                                            });
+                                          },
+                                          child: const Padding(
+                                            padding: EdgeInsets.all(10.0),
+                                            child: Text('Cancel'),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                              );
+                            },
+                          );
+                        }
                       },
                       child: const Text('Add Task'),
                     ),
@@ -259,9 +416,9 @@ class _TaskManagerPageState extends State<TaskManagerPage> {
                 ),
               )
             : ListView.builder(
-                itemCount: SharedData().tasks.length,
+                itemCount: tasks.length,
                 itemBuilder: (context, index) {
-                  return SharedData().tasks[index].isComplete == false
+                  return tasks[index].isComplete == false
                       ? Container(
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(10),
@@ -286,14 +443,14 @@ class _TaskManagerPageState extends State<TaskManagerPage> {
                           ),
                           child: ListTile(
                             title: Text(
-                              SharedData().tasks[index].name,
+                              tasks[index].name,
                               style: const TextStyle(
                                 fontSize: 24,
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
                             subtitle: Text(
-                              SharedData().tasks[index].description,
+                              tasks[index].description,
                               style: TextStyle(
                                 fontSize: 16,
                                 fontWeight: FontWeight.bold,
@@ -303,7 +460,7 @@ class _TaskManagerPageState extends State<TaskManagerPage> {
                             trailing: IconButton(
                               onPressed: () {
                                 setState(() {
-                                  SharedData().completeTask(index);
+                                  completeTask(index);
                                   ScaffoldMessenger.of(context).showSnackBar(
                                     const SnackBar(
                                       content: Text('Task completed!'),
@@ -318,7 +475,7 @@ class _TaskManagerPageState extends State<TaskManagerPage> {
                               Navigator.of(context).push(
                                 MaterialPageRoute(
                                   builder: (context) => TaskDetailsPage(
-                                    index: index,
+                                    task: tasks[index],
                                   ),
                                 ),
                               );

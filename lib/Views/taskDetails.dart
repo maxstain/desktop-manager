@@ -1,10 +1,9 @@
-import 'package:desktop_manager/Shared/Data.dart';
-import 'package:desktop_manager/Views/HomePage.dart';
+import 'package:desktop_manager/Models/Task.dart';
 import 'package:flutter/material.dart';
 
 class TaskDetailsPage extends StatefulWidget {
-  final int index;
-  const TaskDetailsPage({Key? key, required this.index}) : super(key: key);
+  final Task task;
+  const TaskDetailsPage({Key? key, required this.task}) : super(key: key);
 
   @override
   State<TaskDetailsPage> createState() => _TaskDetailsPageState();
@@ -30,18 +29,16 @@ class _TaskDetailsPageState extends State<TaskDetailsPage> {
       body: ListView(
         children: [
           ListTile(
-            title: Text('Name: ${SharedData().tasks[widget.index].name}'),
-            subtitle: Text(SharedData().tasks[widget.index].description),
+            title: Text('Name: ${widget.task.name}'),
+            subtitle: Text(widget.task.description),
           ),
           ListTile(
             title: const Text('Start Time'),
-            subtitle: Text('${SharedData().tasks[widget.index].startTime}'
-                .substring(0, 16)),
+            subtitle: Text('${widget.task.startTime}'.substring(0, 16)),
           ),
           ListTile(
             title: const Text('End Time'),
-            subtitle: Text(
-                '${SharedData().tasks[widget.index].endTime}'.substring(0, 16)),
+            subtitle: Text('${widget.task.endTime}'.substring(0, 16)),
           ),
         ],
       ),
@@ -55,7 +52,7 @@ class _TaskDetailsPageState extends State<TaskDetailsPage> {
             ),
             onPressed: () {
               setState(() {
-                SharedData().completeTask(index);
+                widget.task.complete();
                 ScaffoldMessenger.of(context).showSnackBar(
                   const SnackBar(
                     content: Text('Task completed!'),
@@ -69,31 +66,7 @@ class _TaskDetailsPageState extends State<TaskDetailsPage> {
                 vertical: 10,
               ),
               child: const Text(
-                'Completed',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 18,
-                ),
-              ),
-            ),
-          ),
-          TextButton(
-            onPressed: () {
-              setState(() {
-                SharedData().tasks.remove(SharedData().tasks[widget.index]);
-                Navigator.pop(context);
-              });
-            },
-            style: TextButton.styleFrom(
-              backgroundColor: Colors.red,
-            ),
-            child: Container(
-              padding: const EdgeInsets.symmetric(
-                horizontal: 20,
-                vertical: 10,
-              ),
-              child: const Text(
-                'Delete',
+                'Complete',
                 style: TextStyle(
                   color: Colors.white,
                   fontSize: 18,
