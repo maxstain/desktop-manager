@@ -468,6 +468,7 @@ class _TaskManagerPageState extends State<TaskManagerPage> {
                               ),
                             ),
                             subtitle: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
                                   tasks[index].description,
@@ -477,13 +478,36 @@ class _TaskManagerPageState extends State<TaskManagerPage> {
                                     color: Colors.grey[600],
                                   ),
                                 ),
-                                Text(
-                                  '${tasks[index].startTime.hour}:${tasks[index].startTime.minute} - ${tasks[index].endTime.hour}:${tasks[index].endTime.minute}',
-                                  style: TextStyle(
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.grey[600],
-                                  ),
+                                Row(
+                                  children: [
+                                    Text(
+                                      'End time: ${tasks[index].endTime.hour}:${tasks[index].endTime.minute}',
+                                      style: TextStyle(
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.grey[600],
+                                      ),
+                                    ),
+                                    const SizedBox(
+                                      width: 10,
+                                    ),
+                                    Text(
+                                      tasks[index].status == 0
+                                          ? 'Not Started'
+                                          : tasks[index].status == 1
+                                              ? 'In Progress'
+                                              : 'Complete',
+                                      style: TextStyle(
+                                        fontSize: 12,
+                                        fontWeight: FontWeight.bold,
+                                        color: tasks[index].status == 0
+                                            ? Colors.red
+                                            : tasks[index].status == 1
+                                                ? Colors.orange
+                                                : Colors.green,
+                                      ),
+                                    ),
+                                  ],
                                 ),
                               ],
                             ),
