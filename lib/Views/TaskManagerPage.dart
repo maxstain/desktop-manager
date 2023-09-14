@@ -266,7 +266,11 @@ class _TaskManagerPageState extends State<TaskManagerPage> {
   }
 
   void addTask(
-      String name, String description, DateTime startTime, DateTime endTime) {
+    String name,
+    String description,
+    DateTime startTime,
+    DateTime endTime,
+  ) {
     Task task = Task(name, description, startTime, endTime, 0, false);
     tasks.add(task);
   }
