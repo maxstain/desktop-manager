@@ -26,21 +26,98 @@ class _TaskDetailsPageState extends State<TaskDetailsPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Task Details'),
+        title: const Text(
+          'Task Details',
+          style: TextStyle(color: Colors.white),
+        ),
+        backgroundColor: Colors.blueGrey[700],
       ),
       body: ListView(
         children: [
           ListTile(
-            title: Text('Name: ${widget.task.name}'),
+            title: Text(
+              'Name: ${widget.task.name}',
+              style: const TextStyle(fontWeight: FontWeight.bold),
+            ),
             subtitle: Text(widget.task.description),
           ),
           ListTile(
-            title: const Text('Start Time'),
+            title: const Text(
+              'Start Time',
+              style: TextStyle(fontWeight: FontWeight.bold),
+            ),
             subtitle: Text('${widget.task.startTime}'.substring(0, 16)),
           ),
           ListTile(
-            title: const Text('End Time'),
+            title: const Text(
+              'End Time',
+              style: TextStyle(fontWeight: FontWeight.bold),
+            ),
             subtitle: Text('${widget.task.endTime}'.substring(0, 16)),
+          ),
+          ListTile(
+            title: const Text(
+              'Status',
+              style: TextStyle(fontWeight: FontWeight.bold),
+            ),
+            subtitle: Text(
+              widget.task.status == 0
+                  ? 'Not Started'
+                  : widget.task.status == 1
+                      ? 'In Progress'
+                      : 'Complete',
+              style: TextStyle(
+                color: widget.task.status == 0
+                    ? Colors.red
+                    : widget.task.status == 1
+                        ? Colors.orange
+                        : Colors.green,
+              ),
+            ),
+          ),
+          const SizedBox(height: 20),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              TextButton(
+                style: TextButton.styleFrom(
+                  primary: Colors.white,
+                  backgroundColor: Colors.blueGrey[700],
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  padding: EdgeInsets.symmetric(
+                    horizontal: MediaQuery.of(context).size.width / 10,
+                    vertical: 20,
+                  ),
+                ),
+                onPressed: () {
+                  setState(() {
+                    widget.task.start();
+                  });
+                },
+                child: const Text('Start'),
+              ),
+              TextButton(
+                style: TextButton.styleFrom(
+                  primary: Colors.white,
+                  backgroundColor: Colors.green,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  padding: EdgeInsets.symmetric(
+                    horizontal: MediaQuery.of(context).size.width / 4,
+                    vertical: 20,
+                  ),
+                ),
+                onPressed: () {
+                  setState(() {
+                    widget.task.complete();
+                  });
+                },
+                child: const Text('Complete'),
+              ),
+            ],
           ),
         ],
       ),
