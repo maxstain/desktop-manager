@@ -123,6 +123,7 @@ class _TaskDetailsPageState extends State<TaskDetailsPage> {
                           widget.task.startTime,
                           widget.task.endTime,
                           widget.task.status,
+                          widget.task.isComplete,
                         ).toJson().toString(),
                       );
                     });

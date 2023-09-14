@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:desktop_manager/Models/Task.dart';
@@ -19,15 +20,7 @@ class _TaskManagerPageState extends State<TaskManagerPage> {
   late DateTime startTimeController;
   late DateTime endTimeController;
 
-  late final List<Task> tasks = [
-    // Task(
-    //   'Data Dictionary',
-    //   'Correct the data dictionary that MGR revised',
-    //   DateTime(2023, 9, 12, 9),
-    //   DateTime(2023, 9, 12, 17),
-    //   false,
-    // ),
-  ];
+  late List<Task> tasks = [];
 
   void openAddTaskDialog() {
     if (Platform.isAndroid || Platform.isIOS) {
@@ -285,9 +278,29 @@ class _TaskManagerPageState extends State<TaskManagerPage> {
   }
 
   void addTask(
-      String name, String description, DateTime startTime, DateTime endTime) {
-    Task task = Task(name, description, startTime, endTime, 0);
-    tasks.add(task);
+    String name,
+    String description,
+    DateTime startTime,
+    DateTime endTime,
+  ) {
+    tasks.add(
+      Task(
+        name,
+        description,
+        startTime,
+        endTime,
+        0,
+        false,
+      ),
+    );
+
+    // Convert the task list to a JSON string.
+    String taskListJson = jsonEncode(tasks);
+
+    // Save the task list to shared preferences.
+    SharedPreferences.getInstance().then((value) {
+      value.setString('tasks', taskListJson);
+    });
   }
 
   void checker() {
@@ -325,6 +338,18 @@ class _TaskManagerPageState extends State<TaskManagerPage> {
   @override
   void initState() {
     super.initState();
+    SharedPreferences.getInstance().then((value) {
+      if (value.containsKey('tasks')) {
+        List<String> taskListJson = value.getStringList('tasks')!;
+        List<Task> taskList = taskListJson
+            .map((e) => Task.fromJson(jsonDecode(e)))
+            .toList()
+            .cast<Task>();
+        setState(() {
+          tasks = taskList;
+        });
+      }
+    });
     _timer();
   }
 

@@ -1,3 +1,6 @@
+import 'dart:convert';
+
+
 class Task {
   late final String name;
   late final String description;
@@ -12,6 +15,7 @@ class Task {
     this.startTime,
     this.endTime,
     this.status,
+    this.isComplete,
   ) {
     if (status == 0) {
       isComplete = false;
@@ -31,6 +35,16 @@ class Task {
         endTime = DateTime.parse(json['endTime']),
         isComplete = json['isComplete'],
         status = json['status'];
+
+  Task.fromSharedPreferencesString(String string) {
+    Map<String, dynamic> json = jsonDecode(string);
+    name = json['name'];
+    description = json['description'];
+    startTime = DateTime.parse(json['startTime']);
+    endTime = DateTime.parse(json['endTime']);
+    isComplete = json['isComplete'];
+    status = json['status'];
+  }
 
   Map<String, dynamic> toJson() => {
         'name': name,
