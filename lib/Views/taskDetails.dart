@@ -1,6 +1,5 @@
 import 'package:desktop_manager/Models/Task.dart';
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class TaskDetailsPage extends StatefulWidget {
   final Task task;
@@ -114,19 +113,6 @@ class _TaskDetailsPageState extends State<TaskDetailsPage> {
                 onPressed: () {
                   setState(() {
                     widget.task.complete();
-                    SharedPreferences.getInstance().then((prefs) {
-                      prefs.setString(
-                        widget.task.name,
-                        Task(
-                          widget.task.name,
-                          widget.task.description,
-                          widget.task.startTime,
-                          widget.task.endTime,
-                          widget.task.status,
-                          widget.task.isComplete,
-                        ).toJson().toString(),
-                      );
-                    });
                     ScaffoldMessenger.of(context).showSnackBar(
                       const SnackBar(
                         content: Text('Task Completed'),
