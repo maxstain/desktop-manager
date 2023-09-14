@@ -504,7 +504,11 @@ class _TaskManagerPageState extends State<TaskManagerPage> {
                                       style: TextStyle(
                                         fontSize: 12,
                                         fontWeight: FontWeight.bold,
-                                        color: Colors.grey[600],
+                                        color: tasks[index].status == 0
+                                            ? Colors.red
+                                            : tasks[index].status == 1
+                                                ? Colors.orange
+                                                : Colors.green,
                                       ),
                                     ),
                                   ],
