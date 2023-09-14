@@ -4,6 +4,7 @@ import 'package:desktop_manager/Models/Task.dart';
 import 'package:desktop_manager/Shared/Data.dart';
 import 'package:desktop_manager/Views/taskDetails.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class TaskManagerPage extends StatefulWidget {
   const TaskManagerPage({Key? key}) : super(key: key);
@@ -114,6 +115,12 @@ class _TaskManagerPageState extends State<TaskManagerPage> {
                       startTimeController,
                       endTimeController,
                     );
+                    SharedPreferences.getInstance().then((value) {
+                      value.setStringList(
+                        'tasks',
+                        tasks.map((e) => e.toJson().toString()).toList(),
+                      );
+                    });
                     nameController.clear();
                     descriptionController.clear();
                     Navigator.pop(context);
@@ -224,6 +231,12 @@ class _TaskManagerPageState extends State<TaskManagerPage> {
                             startTimeController,
                             endTimeController,
                           );
+                          SharedPreferences.getInstance().then((value) {
+                            value.setStringList(
+                              'tasks',
+                              tasks.map((e) => e.toJson().toString()).toList(),
+                            );
+                          });
                           nameController.clear();
                           descriptionController.clear();
                         });
@@ -263,6 +276,12 @@ class _TaskManagerPageState extends State<TaskManagerPage> {
 
   void completeTask(int index) {
     tasks.removeAt(index);
+    SharedPreferences.getInstance().then((value) {
+      value.setStringList(
+        'tasks',
+        tasks.map((e) => e.toJson().toString()).toList(),
+      );
+    });
   }
 
   void addTask(
