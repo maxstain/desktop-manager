@@ -1,11 +1,9 @@
-import 'dart:convert';
 import 'dart:io';
 
 import 'package:desktop_manager/Models/Task.dart';
 import 'package:desktop_manager/Shared/Data.dart';
 import 'package:desktop_manager/Views/taskDetails.dart';
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class TaskManagerPage extends StatefulWidget {
   const TaskManagerPage({Key? key}) : super(key: key);
@@ -20,7 +18,15 @@ class _TaskManagerPageState extends State<TaskManagerPage> {
   late DateTime startTimeController;
   late DateTime endTimeController;
 
-  late List<Task> tasks = [];
+  late final List<Task> tasks = [
+    // Task(
+    //   'Data Dictionary',
+    //   'Correct the data dictionary that MGR revised',
+    //   DateTime(2023, 9, 12, 9),
+    //   DateTime(2023, 9, 12, 17),
+    //   false,
+    // ),
+  ];
 
   void openAddTaskDialog() {
     if (Platform.isAndroid || Platform.isIOS) {
@@ -108,12 +114,6 @@ class _TaskManagerPageState extends State<TaskManagerPage> {
                       startTimeController,
                       endTimeController,
                     );
-                    SharedPreferences.getInstance().then((value) {
-                      value.setStringList(
-                        'tasks',
-                        tasks.map((e) => e.toJson().toString()).toList(),
-                      );
-                    });
                     nameController.clear();
                     descriptionController.clear();
                     Navigator.pop(context);
@@ -224,12 +224,6 @@ class _TaskManagerPageState extends State<TaskManagerPage> {
                             startTimeController,
                             endTimeController,
                           );
-                          SharedPreferences.getInstance().then((value) {
-                            value.setStringList(
-                              'tasks',
-                              tasks.map((e) => e.toJson().toString()).toList(),
-                            );
-                          });
                           nameController.clear();
                           descriptionController.clear();
                         });
@@ -269,38 +263,12 @@ class _TaskManagerPageState extends State<TaskManagerPage> {
 
   void completeTask(int index) {
     tasks.removeAt(index);
-    SharedPreferences.getInstance().then((value) {
-      value.setStringList(
-        'tasks',
-        tasks.map((e) => e.toJson().toString()).toList(),
-      );
-    });
   }
 
   void addTask(
-    String name,
-    String description,
-    DateTime startTime,
-    DateTime endTime,
-  ) {
-    tasks.add(
-      Task(
-        name,
-        description,
-        startTime,
-        endTime,
-        0,
-        false,
-      ),
-    );
-
-    // Convert the task list to a JSON string.
-    String taskListJson = jsonEncode(tasks);
-
-    // Save the task list to shared preferences.
-    SharedPreferences.getInstance().then((value) {
-      value.setString('tasks', taskListJson);
-    });
+      String name, String description, DateTime startTime, DateTime endTime) {
+    Task task = Task(name, description, startTime, endTime, 0, false);
+    tasks.add(task);
   }
 
   void checker() {
@@ -338,18 +306,6 @@ class _TaskManagerPageState extends State<TaskManagerPage> {
   @override
   void initState() {
     super.initState();
-    SharedPreferences.getInstance().then((value) {
-      if (value.containsKey('tasks')) {
-        List<String> taskListJson = value.getStringList('tasks')!;
-        List<Task> taskList = taskListJson
-            .map((e) => Task.fromJson(jsonDecode(e)))
-            .toList()
-            .cast<Task>();
-        setState(() {
-          tasks = taskList;
-        });
-      }
-    });
     _timer();
   }
 
@@ -544,11 +500,7 @@ class _TaskManagerPageState extends State<TaskManagerPage> {
                                       style: TextStyle(
                                         fontSize: 12,
                                         fontWeight: FontWeight.bold,
-                                        color: tasks[index].status == 0
-                                            ? Colors.red
-                                            : tasks[index].status == 1
-                                                ? Colors.orange
-                                                : Colors.green,
+                                        color: Colors.grey[600],
                                       ),
                                     ),
                                   ],
