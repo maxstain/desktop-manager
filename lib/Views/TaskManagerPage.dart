@@ -267,7 +267,7 @@ class _TaskManagerPageState extends State<TaskManagerPage> {
 
   void addTask(
       String name, String description, DateTime startTime, DateTime endTime) {
-    Task task = Task(name, description, startTime, endTime, false);
+    Task task = Task(name, description, startTime, endTime, 0);
     tasks.add(task);
   }
 
@@ -467,13 +467,25 @@ class _TaskManagerPageState extends State<TaskManagerPage> {
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
-                            subtitle: Text(
-                              tasks[index].description,
-                              style: TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.grey[600],
-                              ),
+                            subtitle: Column(
+                              children: [
+                                Text(
+                                  tasks[index].description,
+                                  style: TextStyle(
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.grey[600],
+                                  ),
+                                ),
+                                Text(
+                                  '${tasks[index].startTime.hour}:${tasks[index].startTime.minute} - ${tasks[index].endTime.hour}:${tasks[index].endTime.minute}',
+                                  style: TextStyle(
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.grey[600],
+                                  ),
+                                ),
+                              ],
                             ),
                             trailing: IconButton(
                               onPressed: () {
