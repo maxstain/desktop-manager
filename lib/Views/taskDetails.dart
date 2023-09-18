@@ -119,6 +119,7 @@ class _TaskDetailsPageState extends State<TaskDetailsPage> {
                       ),
                     );
                   });
+                  Navigator.pop(context);
                 },
                 child: const Text('Complete'),
               ),
