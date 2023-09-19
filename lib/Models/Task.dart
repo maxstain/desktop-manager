@@ -1,6 +1,5 @@
 import 'dart:convert';
 
-
 class Task {
   late final String name;
   late final String description;
@@ -10,12 +9,12 @@ class Task {
   late int status; // 0 = not started, 1 = in progress, 2 = complete
 
   Task(
-    this.name,
-    this.description,
-    this.startTime,
-    this.endTime,
-    this.status,
-    this.isComplete,
+      {required this.name,
+      required this.description,
+      required this.startTime,
+      required this.endTime,
+      required this.isComplete,
+      required this.status}
   ) {
     if (status == 0) {
       isComplete = false;

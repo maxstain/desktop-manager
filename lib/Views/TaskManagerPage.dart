@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:desktop_manager/Models/Task.dart';
 import 'package:desktop_manager/Shared/Data.dart';
 import 'package:desktop_manager/Views/taskDetails.dart';
+import 'package:desktop_manager/boxes.dart';
 import 'package:flutter/material.dart';
 
 class TaskManagerPage extends StatefulWidget {
@@ -18,15 +19,7 @@ class _TaskManagerPageState extends State<TaskManagerPage> {
   late DateTime startTimeController;
   late DateTime endTimeController;
 
-  late final List<Task> tasks = [
-    // Task(
-    //   'Data Dictionary',
-    //   'Correct the data dictionary that MGR revised',
-    //   DateTime(2023, 9, 12, 9),
-    //   DateTime(2023, 9, 12, 17),
-    //   false,
-    // ),
-  ];
+  late List<Task> tasks;
 
   void openAddTaskDialog() {
     if (Platform.isAndroid || Platform.isIOS) {
@@ -271,8 +264,17 @@ class _TaskManagerPageState extends State<TaskManagerPage> {
     DateTime startTime,
     DateTime endTime,
   ) {
-    Task task = Task(name, description, startTime, endTime, 0, false);
+    Task task = Task(
+      name: name,
+      description: description,
+      startTime: startTime,
+      endTime: endTime,
+      isComplete: false,
+      status: 0,
+    );
     tasks.add(task);
+    tasksBox.put("key_$name", task);
+    tasks = tasksBox.values.toList() as List<Task>;
   }
 
   void checker() {

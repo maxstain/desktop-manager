@@ -1,9 +1,15 @@
+import 'package:desktop_manager/Repositories/Task.dart';
 import 'package:desktop_manager/Routes.dart';
 import 'package:desktop_manager/Shared/Data.dart';
 import 'package:desktop_manager/Views/HomePage.dart';
+import 'package:desktop_manager/boxes.dart';
 import 'package:flutter/material.dart';
+import 'package:hive_flutter/adapters.dart';
 
-void main() {
+void main() async {
+  await Hive.initFlutter();
+  Hive.registerAdapter(TaskAdapter());
+  tasksBox = await Hive.openBox<Task>('tasks');
   runApp(const MyApp());
 }
 
