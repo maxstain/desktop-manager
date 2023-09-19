@@ -325,6 +325,8 @@ class _TaskManagerPageState extends State<TaskManagerPage> {
     double offset = 30;
     late int hours = SharedData().hours;
     late int minutes = SharedData().minutes;
+    late List<Task> searchResults = [];
+
     return Scaffold(
         backgroundColor:
             SharedData().isFree == false ? Colors.white : Colors.green,
@@ -332,7 +334,7 @@ class _TaskManagerPageState extends State<TaskManagerPage> {
           scrolledUnderElevation: 1,
           elevation: 1,
           bottom: PreferredSize(
-            preferredSize: const Size.fromHeight(120),
+            preferredSize: const Size.fromHeight(175),
             child: Column(
               children: [
                 Container(
@@ -400,6 +402,21 @@ class _TaskManagerPageState extends State<TaskManagerPage> {
                     ],
                   ),
                 ),
+                SafeArea(
+                  child: SearchBar(
+                    onChanged: (value) {
+                      setState(
+                        () {
+                          searchResults = tasksBox.values
+                              .where((element) => element.name
+                                  .toLowerCase()
+                                  .contains(value.toLowerCase()))
+                              .toList() as List<Task>;
+                        },
+                      );
+                    },
+                  ),
+                ),
               ],
             ),
           ),
@@ -414,7 +431,7 @@ class _TaskManagerPageState extends State<TaskManagerPage> {
                 },
                 child: const Icon(Icons.add),
               ),
-        body: tasksBox.isEmpty
+        body: tasksBox.isEmpty && searchResults.isEmpty
             ? Center(
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -440,9 +457,13 @@ class _TaskManagerPageState extends State<TaskManagerPage> {
                 ),
               )
             : ListView.builder(
-                itemCount: tasksBox.length,
+                itemCount: searchResults.isEmpty
+                    ? tasksBox.length
+                    : searchResults.length,
                 itemBuilder: (context, index) {
-                  Task task = tasksBox.getAt(index);
+                  Task task = searchResults.isEmpty
+                      ? tasksBox.getAt(index)
+                      : searchResults[index];
                   return task.isComplete == false
                       ? Container(
                           decoration: BoxDecoration(
