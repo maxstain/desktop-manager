@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:desktop_manager/Repositories/Task.dart';
 import 'package:desktop_manager/Shared/Data.dart';
 import 'package:desktop_manager/Views/taskDetails.dart';
@@ -433,15 +432,16 @@ class _TaskManagerPageState extends State<TaskManagerPage> {
                     ),
                     backgroundColor:
                         const MaterialStatePropertyAll<Color>(Colors.white),
-                    leading: const Icon(Icons.search),
                     trailing: [
-                      IconButton(
-                        onPressed: () {
-                          searchController.clear();
-                          searchResults.clear();
-                        },
-                        icon: const Icon(Icons.clear),
-                      ),
+                      searchController.text.isNotEmpty
+                          ? IconButton(
+                              onPressed: () {
+                                searchController.clear();
+                                searchResults.clear();
+                              },
+                              icon: const Icon(Icons.clear),
+                            )
+                          : const Icon(Icons.search),
                     ],
                     elevation: MaterialStateProperty.all<double>(0),
                     shape: MaterialStateProperty.all<RoundedRectangleBorder>(
