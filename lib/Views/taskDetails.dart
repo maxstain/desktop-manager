@@ -94,6 +94,12 @@ class _TaskDetailsPageState extends State<TaskDetailsPage> {
                 onPressed: () {
                   setState(() {
                     widget.task.startTask();
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(
+                        content: Text('Task Started'),
+                      ),
+                    );
+                    Navigator.pop(context);
                   });
                 },
                 child: const Text('Start'),

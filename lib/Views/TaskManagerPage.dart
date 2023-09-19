@@ -326,6 +326,7 @@ class _TaskManagerPageState extends State<TaskManagerPage> {
     late int hours = SharedData().hours;
     late int minutes = SharedData().minutes;
     late List<Task> searchResults = [];
+    TextEditingController searchController = TextEditingController();
 
     return Scaffold(
         backgroundColor:
@@ -404,17 +405,17 @@ class _TaskManagerPageState extends State<TaskManagerPage> {
                 ),
                 SafeArea(
                   child: SearchBar(
+                    controller: searchController,
                     onChanged: (value) {
-                      setState(
-                        () {
-                          searchResults = tasksBox.values
-                              .where((element) => element.name
-                                  .toLowerCase()
-                                  .contains(value.toLowerCase()))
-                              .toList() as List<Task>;
-                        },
-                      );
+                      setState(() {
+                        searchResults = tasksBox.values
+                            .where((element) => element.name
+                                .toLowerCase()
+                                .contains(value.toLowerCase()))
+                            .toList() as List<Task>;
+                      });
                     },
+                    hintText: 'Search',
                   ),
                 ),
               ],
