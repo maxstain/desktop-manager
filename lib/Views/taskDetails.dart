@@ -1,4 +1,4 @@
-import 'package:desktop_manager/Models/Task.dart';
+import 'package:desktop_manager/Repositories/Task.dart';
 import 'package:flutter/material.dart';
 
 class TaskDetailsPage extends StatefulWidget {
@@ -93,7 +93,7 @@ class _TaskDetailsPageState extends State<TaskDetailsPage> {
                 ),
                 onPressed: () {
                   setState(() {
-                    widget.task.start();
+                    widget.task.startTask();
                   });
                 },
                 child: const Text('Start'),
@@ -112,7 +112,7 @@ class _TaskDetailsPageState extends State<TaskDetailsPage> {
                 ),
                 onPressed: () {
                   setState(() {
-                    widget.task.complete();
+                    widget.task.completeTask();
                     ScaffoldMessenger.of(context).showSnackBar(
                       const SnackBar(
                         content: Text('Task Completed'),

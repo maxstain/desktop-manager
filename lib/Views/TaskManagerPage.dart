@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:desktop_manager/Models/Task.dart';
+import 'package:desktop_manager/Repositories/Task.dart';
 import 'package:desktop_manager/Shared/Data.dart';
 import 'package:desktop_manager/Views/taskDetails.dart';
 import 'package:desktop_manager/boxes.dart';
@@ -18,8 +18,6 @@ class _TaskManagerPageState extends State<TaskManagerPage> {
   TextEditingController descriptionController = TextEditingController();
   late DateTime startTimeController;
   late DateTime endTimeController;
-
-  late List<Task> tasks;
 
   void openAddTaskDialog() {
     if (Platform.isAndroid || Platform.isIOS) {
@@ -255,7 +253,7 @@ class _TaskManagerPageState extends State<TaskManagerPage> {
   }
 
   void completeTask(int index) {
-    tasks.removeAt(index);
+    tasksBox.deleteAt(index);
   }
 
   void addTask(
@@ -272,9 +270,11 @@ class _TaskManagerPageState extends State<TaskManagerPage> {
       isComplete: false,
       status: 0,
     );
-    tasks.add(task);
-    tasksBox.put("key_$name", task);
-    tasks = tasksBox.values.toList() as List<Task>;
+
+    tasksBox.put(
+      "key_$name",
+      task,
+    );
   }
 
   void checker() {
@@ -404,7 +404,7 @@ class _TaskManagerPageState extends State<TaskManagerPage> {
             ),
           ),
         ),
-        floatingActionButton: tasks.isEmpty
+        floatingActionButton: tasksBox.isEmpty
             ? null
             : FloatingActionButton(
                 onPressed: () {
@@ -414,7 +414,7 @@ class _TaskManagerPageState extends State<TaskManagerPage> {
                 },
                 child: const Icon(Icons.add),
               ),
-        body: tasks.isEmpty
+        body: tasksBox.isEmpty
             ? Center(
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -440,9 +440,10 @@ class _TaskManagerPageState extends State<TaskManagerPage> {
                 ),
               )
             : ListView.builder(
-                itemCount: tasks.length,
+                itemCount: tasksBox.length,
                 itemBuilder: (context, index) {
-                  return tasks[index].isComplete == false
+                  Task task = tasksBox.getAt(index);
+                  return task.isComplete == false
                       ? Container(
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(10),
@@ -467,7 +468,7 @@ class _TaskManagerPageState extends State<TaskManagerPage> {
                           ),
                           child: ListTile(
                             title: Text(
-                              tasks[index].name,
+                              task.name,
                               style: const TextStyle(
                                 fontSize: 24,
                                 fontWeight: FontWeight.bold,
@@ -477,7 +478,7 @@ class _TaskManagerPageState extends State<TaskManagerPage> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  tasks[index].description,
+                                  task.description,
                                   style: TextStyle(
                                     fontSize: 16,
                                     fontWeight: FontWeight.bold,
@@ -487,7 +488,7 @@ class _TaskManagerPageState extends State<TaskManagerPage> {
                                 Row(
                                   children: [
                                     Text(
-                                      'End time: ${tasks[index].endTime.hour}:${tasks[index].endTime.minute}',
+                                      'End time: ${task.endTime.hour}:${task.endTime.minute}',
                                       style: TextStyle(
                                         fontSize: 16,
                                         fontWeight: FontWeight.bold,
@@ -498,17 +499,17 @@ class _TaskManagerPageState extends State<TaskManagerPage> {
                                       width: 10,
                                     ),
                                     Text(
-                                      tasks[index].status == 0
+                                      task.status == 0
                                           ? 'Not Started'
-                                          : tasks[index].status == 1
+                                          : task.status == 1
                                               ? 'In Progress'
                                               : 'Complete',
                                       style: TextStyle(
                                         fontSize: 12,
                                         fontWeight: FontWeight.bold,
-                                        color: tasks[index].status == 0
+                                        color: task.status == 0
                                             ? Colors.red
-                                            : tasks[index].status == 1
+                                            : task.status == 1
                                                 ? Colors.orange
                                                 : Colors.green,
                                       ),
@@ -535,7 +536,7 @@ class _TaskManagerPageState extends State<TaskManagerPage> {
                               Navigator.of(context).push(
                                 MaterialPageRoute(
                                   builder: (context) => TaskDetailsPage(
-                                    task: tasks[index],
+                                    task: task,
                                   ),
                                 ),
                               );
