@@ -1,4 +1,5 @@
 import 'dart:io';
+
 import 'package:desktop_manager/Repositories/Task.dart';
 import 'package:desktop_manager/Shared/Data.dart';
 import 'package:desktop_manager/Views/taskDetails.dart';
@@ -15,8 +16,6 @@ class TaskManagerPage extends StatefulWidget {
 class _TaskManagerPageState extends State<TaskManagerPage> {
   TextEditingController nameController = TextEditingController();
   TextEditingController descriptionController = TextEditingController();
-  TextEditingController searchController = TextEditingController();
-
   late DateTime startTimeController;
   late DateTime endTimeController;
 
@@ -327,6 +326,7 @@ class _TaskManagerPageState extends State<TaskManagerPage> {
     late int hours = SharedData().hours;
     late int minutes = SharedData().minutes;
     late List<Task> searchResults = [];
+    TextEditingController searchController = TextEditingController();
 
     return Scaffold(
         backgroundColor:
@@ -412,18 +412,11 @@ class _TaskManagerPageState extends State<TaskManagerPage> {
                     controller: searchController,
                     onChanged: (value) {
                       setState(() {
-                        if (value.isEmpty) {
-                          searchResults.clear();
-                          return;
-                        }
-                        searchResults = tasksBox.values.where((task) {
-                          return task.name
-                                  .toLowerCase()
-                                  .contains(value.toLowerCase()) ||
-                              task.description
-                                  .toLowerCase()
-                                  .contains(value.toLowerCase());
-                        }).toList() as List<Task>;
+                        searchResults = tasksBox.values
+                            .where((task) => task.name
+                                .toLowerCase()
+                                .contains(value.toLowerCase()))
+                            .toList() as List<Task>;
                       });
                     },
                     hintText: 'Search Tasks',
@@ -432,16 +425,15 @@ class _TaskManagerPageState extends State<TaskManagerPage> {
                     ),
                     backgroundColor:
                         const MaterialStatePropertyAll<Color>(Colors.white),
+                    leading: const Icon(Icons.search),
                     trailing: [
-                      searchController.text.isNotEmpty
-                          ? IconButton(
-                              onPressed: () {
-                                searchController.clear();
-                                searchResults.clear();
-                              },
-                              icon: const Icon(Icons.clear),
-                            )
-                          : const Icon(Icons.search),
+                      IconButton(
+                        onPressed: () {
+                          searchController.clear();
+                          searchResults.clear();
+                        },
+                        icon: const Icon(Icons.clear),
+                      ),
                     ],
                     elevation: MaterialStateProperty.all<double>(0),
                     shape: MaterialStateProperty.all<RoundedRectangleBorder>(
