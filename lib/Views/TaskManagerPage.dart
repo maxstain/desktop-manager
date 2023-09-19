@@ -16,6 +16,8 @@ class TaskManagerPage extends StatefulWidget {
 class _TaskManagerPageState extends State<TaskManagerPage> {
   TextEditingController nameController = TextEditingController();
   TextEditingController descriptionController = TextEditingController();
+  TextEditingController searchController = TextEditingController();
+
   late DateTime startTimeController;
   late DateTime endTimeController;
 
@@ -326,7 +328,6 @@ class _TaskManagerPageState extends State<TaskManagerPage> {
     late int hours = SharedData().hours;
     late int minutes = SharedData().minutes;
     late List<Task> searchResults = [];
-    TextEditingController searchController = TextEditingController();
 
     return Scaffold(
         backgroundColor:
@@ -335,7 +336,7 @@ class _TaskManagerPageState extends State<TaskManagerPage> {
           scrolledUnderElevation: 1,
           elevation: 1,
           bottom: PreferredSize(
-            preferredSize: const Size.fromHeight(175),
+            preferredSize: const Size.fromHeight(175 + 19),
             child: Column(
               children: [
                 Container(
@@ -403,19 +404,54 @@ class _TaskManagerPageState extends State<TaskManagerPage> {
                     ],
                   ),
                 ),
-                SafeArea(
+                Container(
+                  margin: const EdgeInsets.symmetric(
+                    horizontal: 20,
+                    vertical: 10,
+                  ),
                   child: SearchBar(
                     controller: searchController,
                     onChanged: (value) {
                       setState(() {
-                        searchResults = tasksBox.values
-                            .where((element) => element.name
-                                .toLowerCase()
-                                .contains(value.toLowerCase()))
-                            .toList() as List<Task>;
+                        if (value.isEmpty) {
+                          searchResults.clear();
+                          return;
+                        }
+                        searchResults = tasksBox.values.where((task) {
+                          return task.name
+                                  .toLowerCase()
+                                  .contains(value.toLowerCase()) ||
+                              task.description
+                                  .toLowerCase()
+                                  .contains(value.toLowerCase());
+                        }).toList() as List<Task>;
                       });
                     },
-                    hintText: 'Search',
+                    hintText: 'Search Tasks',
+                    constraints: BoxConstraints(
+                      maxWidth: MediaQuery.of(context).size.width - offset,
+                    ),
+                    backgroundColor:
+                        const MaterialStatePropertyAll<Color>(Colors.white),
+                    leading: const Icon(Icons.search),
+                    trailing: [
+                      IconButton(
+                        onPressed: () {
+                          searchController.clear();
+                          searchResults.clear();
+                        },
+                        icon: const Icon(Icons.clear),
+                      ),
+                    ],
+                    elevation: MaterialStateProperty.all<double>(0),
+                    shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                      RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10.0),
+                        side: const BorderSide(
+                          color: Colors.grey,
+                        ),
+                      ),
+                    ),
                   ),
                 ),
               ],
