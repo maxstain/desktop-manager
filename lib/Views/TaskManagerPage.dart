@@ -18,6 +18,11 @@ class _TaskManagerPageState extends State<TaskManagerPage> {
   TextEditingController descriptionController = TextEditingController();
   late DateTime startTimeController;
   late DateTime endTimeController;
+  double offset = 30;
+  late int hours = SharedData().hours;
+  late int minutes = SharedData().minutes;
+  late List<Task> searchResults = [];
+  TextEditingController searchController = TextEditingController();
 
   void openAddTaskDialog() {
     if (Platform.isAndroid || Platform.isIOS) {
@@ -30,6 +35,8 @@ class _TaskManagerPageState extends State<TaskManagerPage> {
               shrinkWrap: true,
               children: [
                 TextField(
+                  enableIMEPersonalizedLearning: true,
+                  keyboardType: TextInputType.name,
                   controller: nameController,
                   decoration: const InputDecoration(
                     labelText: 'Task Name',
@@ -37,6 +44,8 @@ class _TaskManagerPageState extends State<TaskManagerPage> {
                 ),
                 TextField(
                   controller: descriptionController,
+                  enableIMEPersonalizedLearning: true,
+                  keyboardType: TextInputType.text,
                   decoration: const InputDecoration(
                     labelText: 'Task Description',
                   ),
@@ -131,12 +140,16 @@ class _TaskManagerPageState extends State<TaskManagerPage> {
               children: [
                 TextField(
                   controller: nameController,
+                  enableIMEPersonalizedLearning: true,
+                  keyboardType: TextInputType.name,
                   decoration: const InputDecoration(
                     labelText: 'Task Name',
                   ),
                 ),
                 TextField(
                   controller: descriptionController,
+                  enableIMEPersonalizedLearning: true,
+                  keyboardType: TextInputType.name,
                   decoration: const InputDecoration(
                     labelText: 'Task Description',
                   ),
@@ -322,12 +335,6 @@ class _TaskManagerPageState extends State<TaskManagerPage> {
 
   @override
   Widget build(BuildContext context) {
-    double offset = 30;
-    late int hours = SharedData().hours;
-    late int minutes = SharedData().minutes;
-    late List<Task> searchResults = [];
-    TextEditingController searchController = TextEditingController();
-
     return Scaffold(
         backgroundColor:
             SharedData().isFree == false ? Colors.white : Colors.green,
@@ -411,13 +418,15 @@ class _TaskManagerPageState extends State<TaskManagerPage> {
                   child: SearchBar(
                     controller: searchController,
                     onChanged: (value) {
-                      setState(() {
-                        searchResults = tasksBox.values
-                            .where((task) => task.name
-                                .toLowerCase()
-                                .contains(value.toLowerCase()))
-                            .toList() as List<Task>;
-                      });
+                      setState(
+                        () {
+                          searchResults = tasksBox.values
+                              .where((task) => task.name
+                                  .toLowerCase()
+                                  .contains(value.toLowerCase()))
+                              .toList() as List<Task>;
+                        },
+                      );
                     },
                     hintText: 'Search Tasks',
                     constraints: BoxConstraints(
@@ -425,15 +434,16 @@ class _TaskManagerPageState extends State<TaskManagerPage> {
                     ),
                     backgroundColor:
                         const MaterialStatePropertyAll<Color>(Colors.white),
-                    leading: const Icon(Icons.search),
                     trailing: [
-                      IconButton(
-                        onPressed: () {
-                          searchController.clear();
-                          searchResults.clear();
-                        },
-                        icon: const Icon(Icons.clear),
-                      ),
+                      searchController.text.isNotEmpty
+                          ? IconButton(
+                              onPressed: () {
+                                searchController.clear();
+                                searchResults.clear();
+                              },
+                              icon: const Icon(Icons.clear),
+                            )
+                          : const Icon(Icons.search),
                     ],
                     elevation: MaterialStateProperty.all<double>(0),
                     shape: MaterialStateProperty.all<RoundedRectangleBorder>(
