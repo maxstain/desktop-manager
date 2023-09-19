@@ -325,12 +325,14 @@ class _TaskManagerPageState extends State<TaskManagerPage> {
   @override
   void initState() {
     super.initState();
+    setState(() {});
     _timer();
   }
 
   @override
   void dispose() {
     super.dispose();
+    setState(() {});
   }
 
   @override

@@ -115,11 +115,13 @@ class _HomeState extends State<Home> {
   @override
   void initState() {
     super.initState();
+    setState(() {});
   }
 
   @override
   void dispose() {
     super.dispose();
+    setState(() {});
   }
 
   @override

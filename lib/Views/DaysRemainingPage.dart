@@ -43,12 +43,14 @@ void checker() {
   @override
   void initState() {
     super.initState();
+    setState(() {});
     _timer();
   }
 
   @override
   void dispose() {
     super.dispose();
+    setState(() {});
   }
 
   @override
