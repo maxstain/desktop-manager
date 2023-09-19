@@ -1,3 +1,4 @@
+import 'package:desktop_manager/boxes.dart';
 import 'package:hive/hive.dart';
 
 part 'Task.g.dart';
@@ -58,6 +59,19 @@ class Task {
     );
   }
 
+  /*
+  * CopyWith method to create a new Task object with updated values
+  *
+  * @param name - String
+  * @param description - String
+  * @param startTime - DateTime
+  * @param endTime - DateTime
+  * @param isComplete - bool
+  * @param status - int
+  *
+  * @return Task
+  *
+  */
   Task copyWith({
     String? name,
     String? description,
@@ -96,5 +110,6 @@ class Task {
 
   void startTask() {
     status = 1;
+    tasksBox.putAt(tasksBox.values.toList().indexOf(this), this);
   }
 }
