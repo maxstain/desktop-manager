@@ -488,7 +488,7 @@ class _TaskManagerPageState extends State<TaskManagerPage> {
                                 Row(
                                   children: [
                                     Text(
-                                      'End time: ${task.endTime.hour}:${task.endTime.minute}',
+                                      'End time: ${task.endTime.hour}:${task.endTime.minute == 0 ? '00' : task.endTime.minute}',
                                       style: TextStyle(
                                         fontSize: 16,
                                         fontWeight: FontWeight.bold,
