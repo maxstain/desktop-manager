@@ -22,8 +22,11 @@ class _TaskManagerPageState extends State<TaskManagerPage> {
   late int hours = SharedData().hours;
   late int minutes = SharedData().minutes;
   late List<Task> searchResults = [];
+  static bool isOpened = false;
   TextEditingController searchController = TextEditingController();
-  ExpandableController expandableController = ExpandableController();
+  ExpandableController expandableController = ExpandableController(
+    initialExpanded: isOpened,
+  );
 
   void openAddTaskDialog() {
     if (Platform.isAndroid || Platform.isIOS) {
@@ -326,6 +329,9 @@ class _TaskManagerPageState extends State<TaskManagerPage> {
   @override
   void initState() {
     super.initState();
+    expandableController.addListener(() {
+      isOpened = !isOpened;
+    });
     setState(() {});
     _timer();
   }
@@ -512,33 +518,34 @@ class _TaskManagerPageState extends State<TaskManagerPage> {
                         ? tasksBox.getAt(index)
                         : searchResults[index];
                     return task.isComplete == false
-                        ? ExpandableNotifier(
-                            controller: expandableController,
-                            child: ScrollOnExpand(
-                              child: Container(
-                                padding: const EdgeInsets.all(10),
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(10),
-                                  color: Colors.white,
-                                  border: Border.all(
-                                    color:
-                                        Theme.of(context).colorScheme.secondary,
-                                    width: 0,
-                                  ),
-                                  boxShadow: [
-                                    BoxShadow(
-                                      color: Colors.grey.withOpacity(0.5),
-                                      spreadRadius: 1,
-                                      blurRadius: 2,
-                                      offset: const Offset(
-                                          0, 3), // changes position of shadow
-                                    ),
-                                  ],
+                        ? Container(
+                            padding: const EdgeInsets.all(10),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10),
+                              color: Colors.white,
+                              border: Border.all(
+                                color: Theme.of(context).colorScheme.secondary,
+                                width: 0,
+                              ),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.grey.withOpacity(0.5),
+                                  spreadRadius: 1,
+                                  blurRadius: 2,
+                                  offset: const Offset(
+                                      0, 3), // changes position of shadow
                                 ),
-                                margin: const EdgeInsets.symmetric(
-                                  horizontal: 20,
-                                  vertical: 10,
-                                ),
+                              ],
+                            ),
+                            margin: const EdgeInsets.symmetric(
+                              horizontal: 20,
+                              vertical: 10,
+                            ),
+                            child: ExpandableNotifier(
+                              controller: expandableController,
+                              child: ScrollOnExpand(
+                                scrollOnCollapse: false,
+                                scrollOnExpand: true,
                                 child: ExpandablePanel(
                                   header: Text(
                                     task.name,
