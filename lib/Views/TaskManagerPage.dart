@@ -541,102 +541,94 @@ class _TaskManagerPageState extends State<TaskManagerPage> {
                               horizontal: 20,
                               vertical: 10,
                             ),
-                            child: ExpandableNotifier(
-                              controller: expandableController,
-                              child: ScrollOnExpand(
-                                scrollOnCollapse: false,
-                                scrollOnExpand: true,
-                                child: ExpandablePanel(
-                                  header: Text(
-                                    task.name,
-                                    style: const TextStyle(
-                                      fontSize: 24,
-                                      fontWeight: FontWeight.bold,
+                            child: ExpandablePanel(
+                              header: Text(
+                                task.name,
+                                style: const TextStyle(
+                                  fontSize: 24,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              collapsed: Text(
+                                "${task.description}...",
+                                softWrap: true,
+                                maxLines: 2,
+                                overflow: TextOverflow.ellipsis,
+                                style: const TextStyle(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.grey,
+                                ),
+                              ),
+                              expanded: ListTile(
+                                subtitle: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      task.description,
+                                      style: TextStyle(
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.grey[600],
+                                      ),
                                     ),
-                                  ),
-                                  collapsed: Text(
-                                    "${task.description}...",
-                                    softWrap: true,
-                                    maxLines: 2,
-                                    overflow: TextOverflow.ellipsis,
-                                    style: const TextStyle(
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.grey,
-                                    ),
-                                  ),
-                                  expanded: ListTile(
-                                    subtitle: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
+                                    Row(
                                       children: [
                                         Text(
-                                          task.description,
+                                          'End time: ${task.endTime.hour}:${task.endTime.minute == 0 ? '00' : task.endTime.minute}',
                                           style: TextStyle(
                                             fontSize: 16,
                                             fontWeight: FontWeight.bold,
                                             color: Colors.grey[600],
                                           ),
                                         ),
-                                        Row(
-                                          children: [
-                                            Text(
-                                              'End time: ${task.endTime.hour}:${task.endTime.minute == 0 ? '00' : task.endTime.minute}',
-                                              style: TextStyle(
-                                                fontSize: 16,
-                                                fontWeight: FontWeight.bold,
-                                                color: Colors.grey[600],
-                                              ),
-                                            ),
-                                            const SizedBox(
-                                              width: 10,
-                                            ),
-                                            Text(
-                                              task.status == 0
-                                                  ? 'Not Started'
-                                                  : task.status == 1
-                                                      ? 'In Progress'
-                                                      : 'Complete',
-                                              style: TextStyle(
-                                                fontSize: 12,
-                                                fontWeight: FontWeight.bold,
-                                                color: task.status == 0
-                                                    ? Colors.red
-                                                    : task.status == 1
-                                                        ? Colors.orange
-                                                        : Colors.green,
-                                              ),
-                                            ),
-                                          ],
+                                        const SizedBox(
+                                          width: 10,
+                                        ),
+                                        Text(
+                                          task.status == 0
+                                              ? 'Not Started'
+                                              : task.status == 1
+                                                  ? 'In Progress'
+                                                  : 'Complete',
+                                          style: TextStyle(
+                                            fontSize: 12,
+                                            fontWeight: FontWeight.bold,
+                                            color: task.status == 0
+                                                ? Colors.red
+                                                : task.status == 1
+                                                    ? Colors.orange
+                                                    : Colors.green,
+                                          ),
                                         ),
                                       ],
                                     ),
-                                    trailing: IconButton(
-                                      onPressed: () {
-                                        setState(() {
-                                          completeTask(index);
-                                          ScaffoldMessenger.of(context)
-                                              .showSnackBar(
-                                            const SnackBar(
-                                              content: Text('Task completed!'),
-                                            ),
-                                          );
-                                        });
-                                      },
-                                      icon: const Icon(
-                                          Icons.check_circle_outline_rounded),
-                                    ),
-                                    onTap: () {
-                                      Navigator.of(context).push(
-                                        MaterialPageRoute(
-                                          builder: (context) => TaskDetailsPage(
-                                            task: task,
-                                          ),
+                                  ],
+                                ),
+                                trailing: IconButton(
+                                  onPressed: () {
+                                    setState(() {
+                                      completeTask(index);
+                                      ScaffoldMessenger.of(context)
+                                          .showSnackBar(
+                                        const SnackBar(
+                                          content: Text('Task completed!'),
                                         ),
                                       );
-                                    },
-                                  ),
+                                    });
+                                  },
+                                  icon: const Icon(
+                                      Icons.check_circle_outline_rounded),
                                 ),
+                                onTap: () {
+                                  Navigator.of(context).push(
+                                    MaterialPageRoute(
+                                      builder: (context) => TaskDetailsPage(
+                                        task: task,
+                                      ),
+                                    ),
+                                  );
+                                },
                               ),
                             ),
                           )
