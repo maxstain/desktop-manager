@@ -1,10 +1,10 @@
 import 'dart:io';
-
 import 'package:desktop_manager/Repositories/Task.dart';
 import 'package:desktop_manager/Shared/Data.dart';
 import 'package:desktop_manager/Views/taskDetails.dart';
 import 'package:desktop_manager/boxes.dart';
 import 'package:flutter/material.dart';
+import 'package:expandable/expandable.dart';
 
 class TaskManagerPage extends StatefulWidget {
   const TaskManagerPage({Key? key}) : super(key: key);
@@ -23,6 +23,7 @@ class _TaskManagerPageState extends State<TaskManagerPage> {
   late int minutes = SharedData().minutes;
   late List<Task> searchResults = [];
   TextEditingController searchController = TextEditingController();
+  ExpandableController expandableController = ExpandableController();
 
   void openAddTaskDialog() {
     if (Platform.isAndroid || Platform.isIOS) {
@@ -506,103 +507,125 @@ class _TaskManagerPageState extends State<TaskManagerPage> {
                       ? tasksBox.getAt(index)
                       : searchResults[index];
                   return task.isComplete == false
-                      ? Container(
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10),
-                            color: Colors.white,
-                            border: Border.all(
-                              color: Theme.of(context).colorScheme.secondary,
-                              width: 0,
-                            ),
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.grey.withOpacity(0.5),
-                                spreadRadius: 1,
-                                blurRadius: 2,
-                                offset: const Offset(
-                                    0, 3), // changes position of shadow
+                      ? ExpandableNotifier(
+                          controller: expandableController,
+                          child: ScrollOnExpand(
+                            child: Container(
+                              padding: const EdgeInsets.all(10),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(10),
+                                color: Colors.white,
+                                border: Border.all(
+                                  color:
+                                      Theme.of(context).colorScheme.secondary,
+                                  width: 0,
+                                ),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.grey.withOpacity(0.5),
+                                    spreadRadius: 1,
+                                    blurRadius: 2,
+                                    offset: const Offset(
+                                        0, 3), // changes position of shadow
+                                  ),
+                                ],
                               ),
-                            ],
-                          ),
-                          margin: const EdgeInsets.symmetric(
-                            horizontal: 20,
-                            vertical: 10,
-                          ),
-                          child: ListTile(
-                            title: Text(
-                              task.name,
-                              style: const TextStyle(
-                                fontSize: 24,
-                                fontWeight: FontWeight.bold,
+                              margin: const EdgeInsets.symmetric(
+                                horizontal: 20,
+                                vertical: 10,
                               ),
-                            ),
-                            subtitle: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  task.description,
-                                  style: TextStyle(
+                              child: ExpandablePanel(
+                                header: Text(
+                                  task.name,
+                                  style: const TextStyle(
+                                    fontSize: 24,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                                collapsed: Text(
+                                  "${task.description}...",
+                                  softWrap: true,
+                                  maxLines: 2,
+                                  overflow: TextOverflow.ellipsis,
+                                  style: const TextStyle(
                                     fontSize: 16,
                                     fontWeight: FontWeight.bold,
-                                    color: Colors.grey[600],
+                                    color: Colors.grey,
                                   ),
                                 ),
-                                Row(
-                                  children: [
-                                    Text(
-                                      'End time: ${task.endTime.hour}:${task.endTime.minute == 0 ? '00' : task.endTime.minute}',
-                                      style: TextStyle(
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.bold,
-                                        color: Colors.grey[600],
+                                expanded: ListTile(
+                                  subtitle: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        task.description,
+                                        style: TextStyle(
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.grey[600],
+                                        ),
                                       ),
-                                    ),
-                                    const SizedBox(
-                                      width: 10,
-                                    ),
-                                    Text(
-                                      task.status == 0
-                                          ? 'Not Started'
-                                          : task.status == 1
-                                              ? 'In Progress'
-                                              : 'Complete',
-                                      style: TextStyle(
-                                        fontSize: 12,
-                                        fontWeight: FontWeight.bold,
-                                        color: task.status == 0
-                                            ? Colors.red
-                                            : task.status == 1
-                                                ? Colors.orange
-                                                : Colors.green,
+                                      Row(
+                                        children: [
+                                          Text(
+                                            'End time: ${task.endTime.hour}:${task.endTime.minute == 0 ? '00' : task.endTime.minute}',
+                                            style: TextStyle(
+                                              fontSize: 16,
+                                              fontWeight: FontWeight.bold,
+                                              color: Colors.grey[600],
+                                            ),
+                                          ),
+                                          const SizedBox(
+                                            width: 10,
+                                          ),
+                                          Text(
+                                            task.status == 0
+                                                ? 'Not Started'
+                                                : task.status == 1
+                                                    ? 'In Progress'
+                                                    : 'Complete',
+                                            style: TextStyle(
+                                              fontSize: 12,
+                                              fontWeight: FontWeight.bold,
+                                              color: task.status == 0
+                                                  ? Colors.red
+                                                  : task.status == 1
+                                                      ? Colors.orange
+                                                      : Colors.green,
+                                            ),
+                                          ),
+                                        ],
                                       ),
-                                    ),
-                                  ],
-                                ),
-                              ],
-                            ),
-                            trailing: IconButton(
-                              onPressed: () {
-                                setState(() {
-                                  completeTask(index);
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                    const SnackBar(
-                                      content: Text('Task completed!'),
-                                    ),
-                                  );
-                                });
-                              },
-                              icon: const Icon(
-                                  Icons.check_circle_outline_rounded),
-                            ),
-                            onTap: () {
-                              Navigator.of(context).push(
-                                MaterialPageRoute(
-                                  builder: (context) => TaskDetailsPage(
-                                    task: task,
+                                    ],
                                   ),
+                                  trailing: IconButton(
+                                    onPressed: () {
+                                      setState(() {
+                                        completeTask(index);
+                                        ScaffoldMessenger.of(context)
+                                            .showSnackBar(
+                                          const SnackBar(
+                                            content: Text('Task completed!'),
+                                          ),
+                                        );
+                                      });
+                                    },
+                                    icon: const Icon(
+                                        Icons.check_circle_outline_rounded),
+                                  ),
+                                  onTap: () {
+                                    Navigator.of(context).push(
+                                      MaterialPageRoute(
+                                        builder: (context) => TaskDetailsPage(
+                                          task: task,
+                                        ),
+                                      ),
+                                    );
+                                  },
                                 ),
-                              );
-                            },
+                              ),
+                            ),
                           ),
                         )
                       : Container();
