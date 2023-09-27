@@ -550,7 +550,7 @@ class _TaskManagerPageState extends State<TaskManagerPage> {
                                 ),
                               ),
                               collapsed: Text(
-                                "${task.description}...",
+                                task.description,
                                 softWrap: true,
                                 maxLines: 2,
                                 overflow: TextOverflow.ellipsis,
