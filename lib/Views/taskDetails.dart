@@ -142,15 +142,11 @@ class _TaskDetailsPageState extends State<TaskDetailsPage> {
                   ),
                 ),
                 onPressed: () {
-                  setState(() {
-                    widget.task.completeTask();
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(
-                        content: Text('Task edited'),
-                      ),
-                    );
-                  });
-                  Navigator.pop(context);
+                  /*
+                  * @maxstain 
+                  * WIP: TODO: create the new edit task page 
+                  * and work on the edit task functionality.
+                  */
                 },
                 child: const Text('Edit'),
               ),
