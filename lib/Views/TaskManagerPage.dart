@@ -266,6 +266,10 @@ class _TaskManagerPageState extends State<TaskManagerPage> {
           );
         },
       );
+    } else {
+      /**
+       * TODO: Add support for web
+       */
     }
   }
 
