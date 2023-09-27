@@ -129,6 +129,31 @@ class _TaskDetailsPageState extends State<TaskDetailsPage> {
                 },
                 child: const Text('Complete'),
               ),
+              TextButton(
+                style: TextButton.styleFrom(
+                  primary: Colors.white,
+                  backgroundColor: Colors.green,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  padding: EdgeInsets.symmetric(
+                    horizontal: MediaQuery.of(context).size.width / 4,
+                    vertical: 20,
+                  ),
+                ),
+                onPressed: () {
+                  setState(() {
+                    widget.task.completeTask();
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(
+                        content: Text('Task edited'),
+                      ),
+                    );
+                  });
+                  Navigator.pop(context);
+                },
+                child: const Text('Edit'),
+              ),
             ],
           ),
         ],

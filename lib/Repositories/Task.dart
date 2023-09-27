@@ -108,6 +108,20 @@ class Task {
     status = 2;
   }
 
+  /*
+  * This is a work in progress
+  * This function in used to edit the current task
+  */
+  void editTask(Task newTask) {
+    name = newTask.name;
+    description = newTask.description;
+    startTime = newTask.startTime;
+    endTime = newTask.endTime;
+    status = newTask.status;
+    isComplete = newTask.isComplete;
+    tasksBox.putAt(tasksBox.values.toList().indexOf(this), this);
+  }
+
   void startTask() {
     status = 1;
     tasksBox.putAt(tasksBox.values.toList().indexOf(this), this);
