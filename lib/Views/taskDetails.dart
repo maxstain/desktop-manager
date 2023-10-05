@@ -1,4 +1,5 @@
 import 'package:desktop_manager/Repositories/Task.dart';
+import 'package:desktop_manager/Views/editTaskPage.dart';
 import 'package:flutter/material.dart';
 
 class TaskDetailsPage extends StatefulWidget {
@@ -129,28 +130,39 @@ class _TaskDetailsPageState extends State<TaskDetailsPage> {
                 },
                 child: const Text('Complete'),
               ),
-              TextButton(
-                style: TextButton.styleFrom(
-                  primary: Colors.white,
-                  backgroundColor: Colors.green,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  padding: EdgeInsets.symmetric(
-                    horizontal: MediaQuery.of(context).size.width / 4,
-                    vertical: 20,
-                  ),
-                ),
-                onPressed: () {
-                  /*
-                  * @maxstain 
-                  * WIP: TODO: create the new edit task page 
-                  * and work on the edit task functionality.
-                  */
-                },
-                child: const Text('Edit'),
-              ),
             ],
+          ),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: TextButton(
+              style: TextButton.styleFrom(
+                primary: Colors.white,
+                backgroundColor: Colors.orange,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                padding: EdgeInsets.symmetric(
+                  horizontal: MediaQuery.of(context).size.width / 4,
+                  vertical: 20,
+                ),
+              ),
+              onPressed: () {
+                /*
+                * @maxstain 
+                * WIP: TODO: create the new edit task page (DONE)
+                * and work on the edit task functionality.
+                */
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => EditTaskPage(
+                      task: widget.task,
+                    ),
+                  ),
+                );
+              },
+              child: const Text('Edit'),
+            ),
           ),
         ],
       ),
