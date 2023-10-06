@@ -147,11 +147,6 @@ class _TaskDetailsPageState extends State<TaskDetailsPage> {
                 ),
               ),
               onPressed: () {
-                /*
-                * @maxstain 
-                * WIP: TODO: create the new edit task page (DONE)
-                * and work on the edit task functionality.
-                */
                 Navigator.push(
                   context,
                   MaterialPageRoute(
