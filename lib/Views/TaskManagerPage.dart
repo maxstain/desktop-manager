@@ -129,7 +129,7 @@ class _TaskManagerPageState extends State<TaskManagerPage> {
           );
         },
       );
-    } else if (Platform.isWindows || Platform.isLinux || Platform.isMacOS) {
+    } else {
       showBottomSheet(
         backgroundColor: Colors.grey[100],
         enableDrag: true,
@@ -140,136 +140,156 @@ class _TaskManagerPageState extends State<TaskManagerPage> {
         builder: (context) {
           return Padding(
             padding: const EdgeInsets.all(20.0),
-            child: ListView(
-              children: [
-                TextField(
-                  controller: nameController,
-                  enableIMEPersonalizedLearning: true,
-                  keyboardType: TextInputType.name,
-                  decoration: const InputDecoration(
-                    labelText: 'Task Name',
+            child: Form(
+              child: ListView(
+                children: [
+                  FormField(
+                    builder: (FormFieldState state) {
+                      return TextFormField(
+                        controller: nameController,
+                        enableIMEPersonalizedLearning: true,
+                        keyboardType: TextInputType.name,
+                        decoration: const InputDecoration(
+                          border: OutlineInputBorder(),
+                          labelText: 'Task Name',
+                        ),
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Please enter a task name';
+                          }
+                          return null;
+                        },
+                      );
+                    },
                   ),
-                ),
-                TextField(
-                  controller: descriptionController,
-                  enableIMEPersonalizedLearning: true,
-                  keyboardType: TextInputType.name,
-                  decoration: const InputDecoration(
-                    labelText: 'Task Description',
+                  FormField(
+                    builder: (FormFieldState state) {
+                      return TextFormField(
+                        controller: descriptionController,
+                        enableIMEPersonalizedLearning: true,
+                        keyboardType: TextInputType.name,
+                        decoration: const InputDecoration(
+                          border: OutlineInputBorder(),
+                          labelText: 'Task Description',
+                        ),
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Please enter a task description';
+                          }
+                          return null;
+                        },
+                      );
+                    },
                   ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(
-                    vertical: 10.0,
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
+                      vertical: 10.0,
+                    ),
+                    child: Row(
+                      children: [
+                        const Text('Start Time: '),
+                        ElevatedButton(
+                          onPressed: () async {
+                            startTimeController = await showTimePicker(
+                              context: context,
+                              initialTime: TimeOfDay.now(),
+                            ).then((value) {
+                              return DateTime(
+                                DateTime.now().year,
+                                DateTime.now().month,
+                                DateTime.now().day,
+                                value!.hour,
+                                value.minute,
+                              );
+                            });
+                          },
+                          child: const Text('Select Time'),
+                        ),
+                      ],
+                    ),
                   ),
-                  child: Row(
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
+                      vertical: 10.0,
+                    ),
+                    child: Row(
+                      children: [
+                        const Text('End Time: '),
+                        ElevatedButton(
+                          onPressed: () async {
+                            endTimeController = await showTimePicker(
+                              context: context,
+                              initialTime: TimeOfDay.now(),
+                            ).then((value) {
+                              return DateTime(
+                                DateTime.now().year,
+                                DateTime.now().month,
+                                DateTime.now().day,
+                                value!.hour,
+                                value.minute,
+                              );
+                            });
+                          },
+                          child: const Text('Select Time'),
+                        ),
+                      ],
+                    ),
+                  ),
+                  SizedBox(
+                    height: MediaQuery.of(context).size.height / 10,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      const Text('Start Time: '),
-                      ElevatedButton(
-                        onPressed: () async {
-                          startTimeController = await showTimePicker(
-                            context: context,
-                            initialTime: TimeOfDay.now(),
-                          ).then((value) {
-                            return DateTime(
-                              DateTime.now().year,
-                              DateTime.now().month,
-                              DateTime.now().day,
-                              value!.hour,
-                              value.minute,
+                      TextButton(
+                        style: TextButton.styleFrom(
+                          primary: Colors.white,
+                          backgroundColor: Colors.green,
+                        ),
+                        onPressed: () {
+                          setState(() {
+                            addTask(
+                              nameController.text,
+                              descriptionController.text,
+                              startTimeController,
+                              endTimeController,
                             );
+                            nameController.clear();
+                            descriptionController.clear();
+                          });
+                          Navigator.pop(context);
+                        },
+                        child: const Padding(
+                          padding: EdgeInsets.all(10.0),
+                          child: Text('Add Task'),
+                        ),
+                      ),
+                      TextButton(
+                        style: TextButton.styleFrom(
+                          primary: Colors.white,
+                          backgroundColor: Colors.red,
+                        ),
+                        onPressed: () {
+                          Navigator.pop(context);
+                          setState(() {
+                            nameController.clear();
+                            descriptionController.clear();
                           });
                         },
-                        child: const Text('Select Time'),
+                        child: const Padding(
+                          padding: EdgeInsets.all(10.0),
+                          child: Text('Cancel'),
+                        ),
                       ),
                     ],
                   ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(
-                    vertical: 10.0,
-                  ),
-                  child: Row(
-                    children: [
-                      const Text('End Time: '),
-                      ElevatedButton(
-                        onPressed: () async {
-                          endTimeController = await showTimePicker(
-                            context: context,
-                            initialTime: TimeOfDay.now(),
-                          ).then((value) {
-                            return DateTime(
-                              DateTime.now().year,
-                              DateTime.now().month,
-                              DateTime.now().day,
-                              value!.hour,
-                              value.minute,
-                            );
-                          });
-                        },
-                        child: const Text('Select Time'),
-                      ),
-                    ],
-                  ),
-                ),
-                SizedBox(
-                  height: MediaQuery.of(context).size.height / 10,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    TextButton(
-                      style: TextButton.styleFrom(
-                        primary: Colors.white,
-                        backgroundColor: Colors.green,
-                      ),
-                      onPressed: () {
-                        setState(() {
-                          addTask(
-                            nameController.text,
-                            descriptionController.text,
-                            startTimeController,
-                            endTimeController,
-                          );
-                          nameController.clear();
-                          descriptionController.clear();
-                        });
-                        Navigator.pop(context);
-                      },
-                      child: const Padding(
-                        padding: EdgeInsets.all(10.0),
-                        child: Text('Add Task'),
-                      ),
-                    ),
-                    TextButton(
-                      style: TextButton.styleFrom(
-                        primary: Colors.white,
-                        backgroundColor: Colors.red,
-                      ),
-                      onPressed: () {
-                        Navigator.pop(context);
-                        setState(() {
-                          nameController.clear();
-                          descriptionController.clear();
-                        });
-                      },
-                      child: const Padding(
-                        padding: EdgeInsets.all(10.0),
-                        child: Text('Cancel'),
-                      ),
-                    ),
-                  ],
-                ),
-              ],
+                ],
+              ),
             ),
           );
         },
       );
-    } else {
-      /**
-       * TODO: Add support for web
-       */
     }
   }
 
