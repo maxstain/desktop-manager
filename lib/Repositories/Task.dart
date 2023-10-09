@@ -90,6 +90,9 @@ class Task {
     );
   }
 
+  /*
+  * This function in used to compare two task objects
+  */
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
@@ -103,6 +106,9 @@ class Task {
         other.status == status;
   }
 
+  /*
+   * This function in used to complete the current task object in the database 
+   */
   void completeTask() {
     isComplete = true;
     status = 2;
@@ -121,8 +127,20 @@ class Task {
     tasksBox.putAt(tasksBox.values.toList().indexOf(this), this);
   }
 
+  /*
+  * This function in used to start the current task object in the database
+  */
   void startTask() {
     status = 1;
     tasksBox.putAt(tasksBox.values.toList().indexOf(this), this);
   }
+
+  /*
+  * This function in used to pause the current task object in the database
+  */
+  void pauseTask() {
+    status = 0;
+    tasksBox.putAt(tasksBox.values.toList().indexOf(this), this);
+  }
+
 }
