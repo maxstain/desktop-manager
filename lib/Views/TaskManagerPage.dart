@@ -35,70 +35,94 @@ class _TaskManagerPageState extends State<TaskManagerPage> {
         builder: (context) {
           return AlertDialog(
             title: const Text('Add Task'),
-            content: ListView(
-              shrinkWrap: true,
-              children: [
-                TextField(
-                  enableIMEPersonalizedLearning: true,
-                  keyboardType: TextInputType.name,
-                  controller: nameController,
-                  decoration: const InputDecoration(
-                    labelText: 'Task Name',
+            content: Form(
+              child: ListView(
+                shrinkWrap: true,
+                children: [
+                  FormField(
+                    builder: (FormFieldState state) {
+                      return TextFormField(
+                        controller: nameController,
+                        enableIMEPersonalizedLearning: true,
+                        keyboardType: TextInputType.name,
+                        decoration: const InputDecoration(
+                          border: OutlineInputBorder(),
+                          labelText: 'Task Name',
+                        ),
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Please enter a task name';
+                          }
+                          return null;
+                        },
+                      );
+                    },
                   ),
-                ),
-                TextField(
-                  controller: descriptionController,
-                  enableIMEPersonalizedLearning: true,
-                  keyboardType: TextInputType.text,
-                  decoration: const InputDecoration(
-                    labelText: 'Task Description',
+                  FormField(
+                    builder: (FormFieldState state) {
+                      return TextFormField(
+                        controller: descriptionController,
+                        enableIMEPersonalizedLearning: true,
+                        keyboardType: TextInputType.name,
+                        decoration: const InputDecoration(
+                          border: OutlineInputBorder(),
+                          labelText: 'Task Description',
+                        ),
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Please enter a task description';
+                          }
+                          return null;
+                        },
+                      );
+                    },
                   ),
-                ),
-                Row(
-                  children: [
-                    const Text('Start Time: '),
-                    ElevatedButton(
-                      onPressed: () async {
-                        startTimeController = await showTimePicker(
-                          context: context,
-                          initialTime: TimeOfDay.now(),
-                        ).then((value) {
-                          return DateTime(
-                            DateTime.now().year,
-                            DateTime.now().month,
-                            DateTime.now().day,
-                            value!.hour,
-                            value.minute,
-                          );
-                        });
-                      },
-                      child: const Text('Select Time'),
-                    ),
-                  ],
-                ),
-                Row(
-                  children: [
-                    const Text('End Time: '),
-                    ElevatedButton(
-                      onPressed: () async {
-                        endTimeController = await showTimePicker(
-                          context: context,
-                          initialTime: TimeOfDay.now(),
-                        ).then((value) {
-                          return DateTime(
-                            DateTime.now().year,
-                            DateTime.now().month,
-                            DateTime.now().day,
-                            value!.hour,
-                            value.minute,
-                          );
-                        });
-                      },
-                      child: const Text('Select Time'),
-                    ),
-                  ],
-                ),
-              ],
+                  Row(
+                    children: [
+                      const Text('Start Time: '),
+                      ElevatedButton(
+                        onPressed: () async {
+                          startTimeController = await showTimePicker(
+                            context: context,
+                            initialTime: TimeOfDay.now(),
+                          ).then((value) {
+                            return DateTime(
+                              DateTime.now().year,
+                              DateTime.now().month,
+                              DateTime.now().day,
+                              value!.hour,
+                              value.minute,
+                            );
+                          });
+                        },
+                        child: const Text('Select Time'),
+                      ),
+                    ],
+                  ),
+                  Row(
+                    children: [
+                      const Text('End Time: '),
+                      ElevatedButton(
+                        onPressed: () async {
+                          endTimeController = await showTimePicker(
+                            context: context,
+                            initialTime: TimeOfDay.now(),
+                          ).then((value) {
+                            return DateTime(
+                              DateTime.now().year,
+                              DateTime.now().month,
+                              DateTime.now().day,
+                              value!.hour,
+                              value.minute,
+                            );
+                          });
+                        },
+                        child: const Text('Select Time'),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
             ),
             actions: [
               TextButton(
