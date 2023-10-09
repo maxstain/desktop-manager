@@ -127,8 +127,8 @@ class _TaskDetailsPageState extends State<TaskDetailsPage> {
                       content: Text('Task Completed'),
                     ),
                   );
+                  Navigator.pop(context);
                 });
-                Navigator.pop(context);
               },
               child: const Text('Complete'),
             ),
