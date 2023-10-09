@@ -129,7 +129,9 @@ class _HomeState extends State<Home> {
     return Scaffold(
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          setState(() {});
+          setState(() {
+            SharedData().checker();
+          });
         },
         child: const Icon(Icons.refresh),
       ),
