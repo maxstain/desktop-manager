@@ -77,60 +77,61 @@ class _TaskDetailsPageState extends State<TaskDetailsPage> {
             ),
           ),
           const SizedBox(height: 20),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              TextButton(
-                style: TextButton.styleFrom(
-                  primary: Colors.white,
-                  backgroundColor: Colors.blueGrey[700],
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  padding: EdgeInsets.symmetric(
-                    horizontal: MediaQuery.of(context).size.width / 10,
-                    vertical: 20,
-                  ),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: TextButton(
+              style: TextButton.styleFrom(
+                primary: Colors.white,
+                backgroundColor: Colors.blueGrey[700],
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10),
                 ),
-                onPressed: () {
-                  setState(() {
-                    widget.task.startTask();
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(
-                        content: Text('Task Started'),
-                      ),
-                    );
-                    Navigator.pop(context);
-                  });
-                },
-                child: const Text('Start'),
+                padding: EdgeInsets.symmetric(
+                  horizontal: MediaQuery.of(context).size.width / 4,
+                  vertical: 20,
+                ),
               ),
-              TextButton(
-                style: TextButton.styleFrom(
-                  primary: Colors.white,
-                  backgroundColor: Colors.green,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  padding: EdgeInsets.symmetric(
-                    horizontal: MediaQuery.of(context).size.width / 4,
-                    vertical: 20,
-                  ),
-                ),
-                onPressed: () {
-                  setState(() {
-                    widget.task.completeTask();
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(
-                        content: Text('Task Completed'),
-                      ),
-                    );
-                  });
+              onPressed: () {
+                setState(() {
+                  widget.task.startTask();
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(
+                      content: Text('Task Started'),
+                    ),
+                  );
                   Navigator.pop(context);
-                },
-                child: const Text('Complete'),
+                });
+              },
+              child: const Text('Start'),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: TextButton(
+              style: TextButton.styleFrom(
+                primary: Colors.white,
+                backgroundColor: Colors.green,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                padding: EdgeInsets.symmetric(
+                  horizontal: MediaQuery.of(context).size.width / 4,
+                  vertical: 20,
+                ),
               ),
-            ],
+              onPressed: () {
+                setState(() {
+                  widget.task.completeTask();
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(
+                      content: Text('Task Completed'),
+                    ),
+                  );
+                });
+                Navigator.pop(context);
+              },
+              child: const Text('Complete'),
+            ),
           ),
           Padding(
             padding: const EdgeInsets.all(8.0),
