@@ -109,8 +109,7 @@ class Task {
   }
 
   /*
-  * This is a work in progress
-  * This function in used to edit the current task
+  * This function in used to edit the current task object in the database
   */
   void editTask(Task newTask) {
     name = newTask.name;

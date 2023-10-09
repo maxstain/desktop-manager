@@ -154,10 +154,19 @@ class _EditTaskPageState extends State<EditTaskPage> {
                 ),
                 onPressed: () {
                   setState(() {
-                    widget.task.name = _nameController.text;
-                    widget.task.description = _descriptionController.text;
-                    widget.task.startTime = _startTimeController;
-                    widget.task.endTime = _endTimeController;
+                    Task newTask = Task(
+                      name: _nameController.text == ''
+                          ? widget.task.name
+                          : _nameController.text,
+                      description: _descriptionController.text == ''
+                          ? widget.task.description
+                          : _descriptionController.text,
+                      startTime: _startTimeController,
+                      endTime: _endTimeController,
+                      isComplete: widget.task.isComplete,
+                      status: widget.task.status,
+                    );
+                    widget.task.editTask(newTask);
                     Navigator.pop(context);
                   });
                 },
