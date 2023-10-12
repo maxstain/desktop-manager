@@ -33,10 +33,10 @@ class _TaskManagerPageState extends State<TaskManagerPage> {
       showDialog(
         context: context,
         builder: (context) {
-          return AlertDialog(
-            title: const Text('Add Task'),
-            content: Form(
-              child: ListView(
+          return Form(
+            child: AlertDialog(
+              title: const Text('Add Task'),
+              content: ListView(
                 shrinkWrap: true,
                 children: [
                   FormField(
@@ -126,33 +126,33 @@ class _TaskManagerPageState extends State<TaskManagerPage> {
                   ),
                 ],
               ),
-            ),
-            actions: [
-              TextButton(
-                onPressed: () {
-                  nameController.clear();
-                  descriptionController.clear();
-                  Navigator.pop(context);
-                },
-                child: const Text('Cancel'),
-              ),
-              TextButton(
-                onPressed: () async {
-                  setState(() {
-                    addTask(
-                      nameController.text,
-                      descriptionController.text,
-                      startTimeController,
-                      endTimeController,
-                    );
+              actions: [
+                TextButton(
+                  onPressed: () {
                     nameController.clear();
                     descriptionController.clear();
                     Navigator.pop(context);
-                  });
-                },
-                child: const Text('Add Task'),
-              ),
-            ],
+                  },
+                  child: const Text('Cancel'),
+                ),
+                TextButton(
+                  onPressed: () async {
+                    setState(() {
+                      addTask(
+                        nameController.text,
+                        descriptionController.text,
+                        startTimeController,
+                        endTimeController,
+                      );
+                      nameController.clear();
+                      descriptionController.clear();
+                      Navigator.pop(context);
+                    });
+                  },
+                  child: const Text('Add Task'),
+                ),
+              ],
+            ),
           );
         },
       );
