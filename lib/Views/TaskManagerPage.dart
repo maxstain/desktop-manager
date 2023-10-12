@@ -58,8 +58,8 @@ class _TaskManagerPageState extends State<TaskManagerPage> {
                       );
                     },
                   ),
-                  SizedBox(
-                    height: MediaQuery.of(context).size.height / 10,
+                  const SizedBox(
+                    height: 8.0,
                   ),
                   FormField(
                     builder: (FormFieldState state) {
@@ -189,8 +189,8 @@ class _TaskManagerPageState extends State<TaskManagerPage> {
                       );
                     },
                   ),
-                  SizedBox(
-                    height: MediaQuery.of(context).size.height / 10,
+                  const SizedBox(
+                    height: 8.0,
                   ),
                   FormField(
                     builder: (FormFieldState state) {
