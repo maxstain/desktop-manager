@@ -1,5 +1,6 @@
 // ignore_for_file: must_be_immutable
 
+import 'package:desktop_manager/Components/Loader.dart';
 import 'package:desktop_manager/Views/TaskManagerPage.dart';
 import 'package:desktop_manager/Views/DaysRemainingPage.dart';
 import 'package:flutter/material.dart';
@@ -128,9 +129,21 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
     return Scaffold(
       floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          setState(() {
-            SharedData().checker();
+        onPressed: () async {
+          await Future.delayed(
+            const Duration(seconds: 1),
+            () => showDialog(
+              context: context,
+              barrierDismissible: false,
+              builder: (context) => const Loader(),
+              barrierColor: Colors.white,
+            ),
+          ).then((value) {
+            setState(() {
+              SharedData().checker();
+              hours = SharedData().hours;
+              minutes = SharedData().minutes;
+            });
           });
         },
         child: const Icon(Icons.refresh),
