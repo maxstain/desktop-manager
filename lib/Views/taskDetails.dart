@@ -81,7 +81,7 @@ class _TaskDetailsPageState extends State<TaskDetailsPage> {
             padding: const EdgeInsets.all(8.0),
             child: TextButton(
               style: TextButton.styleFrom(
-                primary: Colors.white,
+                foregroundColor: Colors.white,
                 backgroundColor: Colors.blueGrey[700],
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(10),
@@ -109,7 +109,7 @@ class _TaskDetailsPageState extends State<TaskDetailsPage> {
             padding: const EdgeInsets.all(8.0),
             child: TextButton(
               style: TextButton.styleFrom(
-                primary: Colors.white,
+                foregroundColor: Colors.white,
                 backgroundColor: Colors.green,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(10),
@@ -137,7 +137,7 @@ class _TaskDetailsPageState extends State<TaskDetailsPage> {
             padding: const EdgeInsets.all(8.0),
             child: TextButton(
               style: TextButton.styleFrom(
-                primary: Colors.white,
+                foregroundColor: Colors.white,
                 backgroundColor: Colors.orange,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(10),
