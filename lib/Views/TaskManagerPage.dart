@@ -274,7 +274,7 @@ class _TaskManagerPageState extends State<TaskManagerPage> {
                     children: [
                       TextButton(
                         style: TextButton.styleFrom(
-                          primary: Colors.white,
+                          foregroundColor: Colors.white,
                           backgroundColor: Colors.green,
                         ),
                         onPressed: () {
@@ -297,7 +297,7 @@ class _TaskManagerPageState extends State<TaskManagerPage> {
                       ),
                       TextButton(
                         style: TextButton.styleFrom(
-                          primary: Colors.white,
+                          foregroundColor: Colors.white,
                           backgroundColor: Colors.red,
                         ),
                         onPressed: () {

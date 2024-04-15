@@ -72,7 +72,7 @@ class _EditTaskPageState extends State<EditTaskPage> {
               padding: const EdgeInsets.all(8.0),
               child: TextButton(
                 style: TextButton.styleFrom(
-                  primary: Colors.blueGrey[700],
+                  foregroundColor: Colors.blueGrey[700],
                   backgroundColor: Colors.blueGrey[100],
                 ),
                 onPressed: () {
@@ -107,7 +107,7 @@ class _EditTaskPageState extends State<EditTaskPage> {
               padding: const EdgeInsets.all(8.0),
               child: TextButton(
                 style: TextButton.styleFrom(
-                  primary: Colors.blueGrey[700],
+                  foregroundColor: Colors.blueGrey[700],
                   backgroundColor: Colors.blueGrey[100],
                 ),
                 onPressed: () {
@@ -142,7 +142,7 @@ class _EditTaskPageState extends State<EditTaskPage> {
               padding: const EdgeInsets.all(8.0),
               child: TextButton(
                 style: TextButton.styleFrom(
-                  primary: Colors.white,
+                  foregroundColor: Colors.white,
                   backgroundColor: Colors.blueGrey[700],
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(10),
