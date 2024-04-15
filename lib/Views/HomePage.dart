@@ -1,4 +1,4 @@
-// ignore_for_file: must_be_immutable
+// ignore_for_file: must_be_immutable, file_names
 
 import 'package:desktop_manager/Components/Loader.dart';
 import 'package:desktop_manager/Views/TaskManagerPage.dart';
@@ -8,8 +8,8 @@ import 'package:lottie/lottie.dart';
 import 'package:desktop_manager/Shared/Data.dart';
 
 double offset = SharedData().offset;
-late int hours = SharedData().hours;
-late int minutes = SharedData().minutes;
+int hours = SharedData().hours;
+int minutes = SharedData().minutes;
 int index = 0;
 
 class HomePage extends StatefulWidget {
