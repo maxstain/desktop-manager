@@ -102,11 +102,11 @@ class Home extends StatefulWidget {
   bool isWeekend = false;
   bool isLastDay = false;
   Home({
-    Key? key,
+    super.key,
     required this.isFree,
     required this.isWeekend,
     required this.isLastDay,
-  }) : super(key: key);
+  });
 
   @override
   State<Home> createState() => _HomeState();
